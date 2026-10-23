@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=1280">
+<title>TizenBrew Catalogo</title>
+<style>
+  body { font-family: sans-serif; background:#111; color:#eee; margin:0; padding:24px; }
+  h1 { font-size:28px; margin:0 0 4px; }
+  #status { font-size:18px; margin-bottom:16px; }
+  .ok { color:#6f6; } .err { color:#f66; }
+  .grid { display:grid; grid-template-columns:repeat(2,1fr); gap:14px; }
+  .card { background:#1e1e1e; border:2px solid #333; border-radius:10px; padding:16px; }
+  .card h2 { font-size:22px; margin:0 0 6px; }
+  .card p { font-size:15px; color:#bbb; margin:0 0 12px; min-height:40px; }
+  .card .id { font-size:12px; color:#777; margin-bottom:10px; word-break:break-all; }
+  button { font-size:20px; padding:10px 22px; border-radius:8px; border:0; background:#2a7; color:#fff; cursor:pointer; }
+  button:focus { outline:4px solid #4cf; background:#3c8; }
+  button.added { background:#555; }
+  .note { color:#888; font-size:14px; margin-top:20px; }
+</style>
+</head>
+<body>
+<h1>TizenBrew &mdash; Catalogo de Modulos</h1>
+<div id="status">Conectando ao TizenBrew (ws://127.0.0.1:8081)...</div>
+<div class="grid" id="grid"></div>
+<p class="note">Abra esta pagina no navegador da TV com o TizenBrew aberto em segundo plano.
+Clique em Instalar; depois abra o TizenBrew para ver o modulo na lista.</p>
+<script>
+var MODULES = [
+  {id:'npm/@foxreis/tizentube',        name:'TizenTube (modulo)',   desc:'YouTube sem ads com SponsorBlock dentro do TizenBrew (opcional - voce ja tem o app standalone).'},
+  {id:'npm/@jjg0/twizen',              name:'Twizen (Twitch)',      desc:'Cliente Twitch com adblock e navegacao por controle remoto.'},
+  {id:'gh/nipkownix/twitch-adfree-tizenbrew', name:'Twitch AdFree', desc:'Mod de site: Twitch sem ads, chat transparente, auto-resgata channel points. Botao verde abre config.'},
+  {id:'npm/stremio-tizenbrew',         name:'Stremio',              desc:'Launcher do Stremio Web otimizado pra TV.'},
+  {id:'npm/tizenbrew-stremio-addon',   name:'Stremio Addon',        desc:'Addon Stremio empacotado para TizenBrew.'},
+  {id:'npm/tizenbrew-iptv',            name:'IPTV QR',              desc:'Player IPTV com configuracao de playlist via QR code.'},
+  {id:'npm/tizenbrew-xtreamtv',        name:'Xtream TV',            desc:'Player IPTV via Xtream Codes (usuario/senha/servidor).'},
+  {id:'npm/@kv8n2oryk/iptv-player',    name:'IPTV Player',          desc:'Player IPTV simples com suporte a controle remoto.'},
+  {id:'npm/@pindagus/jellyfin-tizenbrew', name:'Jellyfin',          desc:'Jellyfin via TizenBrew (voce ja tem o app standalone).'},
+  {id:'npm/marten-tizenbrew',          name:'Marten',               desc:'Media server Marten para Samsung TVs.'},
+  {id:'npm/tvlaunch',                  name:'TVLaunch',             desc:'Launcher de sites em tiles; gerenciavel pela rede.'},
+  {id:'npm/watch-tizenbrew',           name:'Watch',                desc:'Cliente do app self-hosted Watch (watch.macr0.dev).'},
+  {id:'npm/couch-curator-tv',          name:'Couch Curator',        desc:'Launcher para Couch Curator hospedado em NAS.'},
+  {id:'npm/shortvideo-tv',             name:'ShortVideo',           desc:'Player de feed de videos curtos publicos.'}
+];
+var grid = document.getElementById('grid');
+var statusEl = document.getElementById('status');
+var installed = {};
+var ws;
+function render() {
+  grid.innerHTML = '';
+  MODULES.forEach(function(m, i) {
+    var c = document.createElement('div');
+    c.className = 'card';
+    var h = document.createElement('h2'); h.textContent = m.name;
+    var p = document.createElement('p'); p.textContent = m.desc;
+    var id = document.createElement('div'); id.className='id'; id.textContent = m.id;
+    var b = document.createElement('button');
+    b.textContent = installed[m.id] ? 'Instalado' : 'Instalar';
+    if (installed[m.id]) b.className = 'added';
+    b.onclick = function() { add(m.id, b); };
+    c.appendChild(h); c.appendChild(p); c.appendChild(id); c.appendChild(b);
+    grid.appendChild(c);
+  });
+}
+function add(id, btn) {
+  if (!ws || ws.readyState !== 1) { statusEl.textContent = 'Sem conexao com o TizenBrew.'; statusEl.className='err'; return; }
+  ws.send(JSON.stringify({type:10, payload:{action:'add', module:id}}));
+  btn.textContent = 'Instalado'; btn.className='added'; installed[id]=true;
+  statusEl.textContent = 'Instalado: ' + id + ' (abra o TizenBrew para ver).'; statusEl.className='ok';
+}
+function connect() {
+  ws = new WebSocket('ws://127.0.0.1:8081');
+  ws.onopen = function() {
+    statusEl.textContent = 'Conectado. Clique para instalar.'; statusEl.className='ok';
+    ws.send(JSON.stringify({type:4, payload:null}));
+  };
+  ws.onmessage = function(e) {
+    try {
+      var msg = JSON.parse(e.data);
+      if (msg.type === 4 && Array.isArray(msg.payload)) {
+        msg.payload.forEach(function(m){ if (m && m.fullName) installed[m.fullName]=true; });
+        render();
+      }
+    } catch(err){}
+  };
+  ws.onerror = function(){ statusEl.textContent = 'Erro de conexao. Abra o TizenBrew na TV primeiro.'; statusEl.className='err'; };
+  ws.onclose = function(){ statusEl.textContent = 'Conexao fechada. Abra o TizenBrew na TV e recarregue a pagina.'; statusEl.className='err'; };
+}
+render();
+connect();
+</script>
+</body>
+</html>

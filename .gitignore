@@ -1,0 +1,6 @@
+.tools/
+T-NKM2UABC/
+nul
+*.msd
+*.zip
+__pycache__/
