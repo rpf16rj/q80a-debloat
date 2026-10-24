@@ -1,10 +1,10 @@
-# Debloat — apps removidos
+# Debloat — removed apps
 
-Remoção via `pkgcmd -u -n <pkgid>` com root. Todos retornaram `key[end] val[ok]`.
+Removal via `pkgcmd -u -n <pkgid>` with root. All returned `key[end] val[ok]`.
 
-## Removidos (12)
+## Removed (12)
 
-| App | pkgid | tipo |
+| App | pkgid | type |
 |---|---|---|
 | Amazon Alexa | `AQKO41xyKP` | wgt |
 | Samsung Promotion | `yL49PNFmjW` | wgt |
@@ -19,30 +19,30 @@ Remoção via `pkgcmd -u -n <pkgid>` com root. Todos retornaram `key[end] val[ok
 | AriaVideoBGService | `30IKH0OX8U` | wgt |
 | Disney+ | `MCmYXNxgcu` | wgt |
 
-## Pós-remoção
+## Post-removal
 
-- Ícones cinzas permanecem na barra da Home até remover o tile (segurar OK → remover) ou reboot
-- Ao clicar num ícone removido: "tente mais tarde" — esperado
-- Companheiros da Alexa (`com.samsung.tv.alexa-client`, `wakeup-engine-alexa`) ficaram — sem app front-end ficam inertes
+- Gray icons stay on the Home bar until the tile is removed (hold OK → remove) or a reboot
+- Clicking a removed icon: "try again later" — expected
+- Alexa companions (`com.samsung.tv.alexa-client`, `wakeup-engine-alexa`) were kept — without the front-end app they are inert
 
-## Candidatos NÃO removidos (telemetria/ads) — risco moderado
+## Candidates NOT removed (telemetry/ads) — moderate risk
 
-Remoção só reversível via factory reset. AdGuard já corta a rede deles.
+Removal is only reversible via factory reset. AdGuard already cuts their network access.
 
-- `com.samsung.tv.acr-service-app` — ACR (reconhece o que você assiste)
+- `com.samsung.tv.acr-service-app` — ACR (recognizes what you watch)
 - `com.samsung.tv.canalysis-service` — analytics
 - `com.samsung.tizen.samsung-analytics` — analytics
-- `com.samsung.tv.nvision-analysis-dbmgr` — coleta
-- `com.samsung.tv.adplayer` / `ad-web-framework` / `coba.adagent` — motor de ads do Smart Hub
+- `com.samsung.tv.nvision-analysis-dbmgr` — data collection
+- `com.samsung.tv.adplayer` / `ad-web-framework` / `coba.adagent` — Smart Hub ad engine
 
-## Outros bloat identificados (não removidos ainda)
+## Other identified bloat (not removed yet)
 
 - `com.samsung.tv.bixbycapsuleviewer`, `bixby-context-client`, `bixby-prov`, `wakeup-engine-bixby` — Bixby
-- `com.samsung.tv.cnvoice-assistant` — assistente de voz CN
-- `org.tizen.multi-assistant-service` — multi-assistente
+- `com.samsung.tv.cnvoice-assistant` — CN voice assistant
+- `org.tizen.multi-assistant-service` — multi-assistant
 - Ambient Mode templates: `tranquilnature-tpl`, `mountainview-tpl`, `cinemagraph-relaxation`, `bouroullecwidget-tpl`
 - `com.samsung.tv.aov-dashboard` — Always On Voice
 
-## Como re-root para mais remoções
+## How to re-root for more removals
 
-Ver `docs/REROOT.md`. Inventário completo: `inventory/pkglist.txt`.
+See `docs/REROOT.md`. Full inventory: `inventory/pkglist.txt`.

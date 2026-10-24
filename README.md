@@ -1,31 +1,32 @@
 # Q80A Debloat — Samsung QN55Q80AAGXZD (NikeM2, Tizen 6.0)
 
-Trabalho de debloat/customização de uma Samsung Q80A 55" 2021 (firmware `T-NKM2UABC` 2301).
+Debloat/customization work on a Samsung Q80A 55" 2021 (firmware `T-NKM2UABC` 2301).
 
-## Estado atual
+## Current state
 
-- **Root obtido** via injeção de comando no fluxo Remote PC/CIFS (`System::Privileged`, volátil — some no reboot)
-- **12 apps removidos** via `pkgcmd -u` (ver `docs/DEBLOAT.md`)
-- **TizenBrew** instalado + catálogo visual servido do PC
-- **FreeMyTV** (launcher alternativo) instalado — pkgid `FreeMyTVio`
-- **AdGuard Home** com listas de bloqueio de ads/telemetria Samsung
-- Chaves SWU do firmware capturadas (`swu_keys/`) — AES cifrado por TrustZone
+- **Root obtained** via command injection in the Remote PC/CIFS flow (`System::Privileged`, volatile — gone after reboot)
+- **12 apps removed** via `pkgcmd -u` (see `docs/DEBLOAT.md`)
+- **TizenBrew** installed + visual catalog served from the PC
+- **FreeMyTV** (alternative launcher) installed — pkgid `FreeMyTVio`
+- **AdGuard Home** with Samsung ads/telemetry blocklists
+- Firmware SWU keys captured (`swu_keys/`) — AES wrapped by TrustZone
 
-## Estrutura
+## Structure
 
 ```
-apps/          — catálogo TizenBrew, WGTs, listas AdGuard
-docs/          — documentação (root, debloat, HDMI/CEC)
-inventory/     — inventário completo de pacotes (355 pkgs)
-kit/           — kit de re-root (stage2, bridge, listener)
-swu_keys/      — chaves SWU extraídas da TV
-tools/         — ferramentas de análise (firmware .msd)
-.tools/        — ferramentas de trabalho (não versionado)
+apps/          — TizenBrew catalog, WGTs, AdGuard blocklists
+docs/          — documentation (root, debloat, HDMI/CEC, research)
+inventory/     — full package inventory (355 pkgs)
+kit/           — re-root kit (stage2, bridge, listener)
+modules/       — TizenBrew local modules (WLED ambilight, HDMI panel)
+swu_keys/      — SWU keys extracted from the TV
+tools/         — analysis tools (firmware .msd, V4L2 timings helper)
+.tools/        — working tools (not versioned)
 ```
 
-## Avisos
+## Warnings
 
-- Firmware NikeM2 é cifrado + assinado RSA — **não existe flash de firmware modificado**. Todo o trabalho é em runtime.
-- O root é **volátil**: reboot mata o shell. Remoções de apps são permanentes (feitas pelo package manager).
-- `/` é write-protected em hardware. Escrita possível em `/opt` e `/mnt/systemrw`.
-- Só usar no seu próprio aparelho.
+- NikeM2 firmware is encrypted + RSA-signed — **there is no modified-firmware flash**. All work is runtime-only.
+- Root is **volatile**: reboot kills the shell. App removals are permanent (done by the package manager).
+- `/` is hardware write-protected. Writable: `/opt` and `/mnt/systemrw`.
+- Use on your own device only.

