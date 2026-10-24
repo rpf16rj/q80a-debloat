@@ -1,0 +1,12 @@
+{
+  "name": "wled-ambilight",
+  "version": "1.0.0",
+  "packageType": "mods",
+  "appName": "YouTube + WLED",
+  "websiteURL": "https://youtube.com/tv?additionalDataUrl=http%3A%2F%2Flocalhost%3A8085%2Fdial%2Fapps%2FYouTube",
+  "main": "main.js",
+  "serviceFile": "service.js",
+  "keys": [],
+  "description": "Ambilight WLED local para Q80A (Tizen 6.0) - captura <video> e envia DDP",
+  "evaluateScriptOnDocumentStart": false
+}

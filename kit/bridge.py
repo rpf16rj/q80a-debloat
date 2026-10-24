@@ -1,4 +1,4 @@
-import socket, threading, queue
+import socket, threading, queue, sys
 
 # TV connects on 9998 (root shell). Control connects on 9997.
 # Bytes flow TV->print + control<-queue. Commands written to control conn go to TV.
@@ -27,7 +27,8 @@ def tv_server():
                 d = conn.recv(4096)
                 if not d:
                     break
-                print(d.decode('utf-8', 'replace'), end='', flush=True)
+                sys.stdout.buffer.write(d)
+                sys.stdout.buffer.flush()
         except Exception as e:
             print('\n[9998] shell caiu:', e, flush=True)
         state['tv'] = None
