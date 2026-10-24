@@ -1,0 +1,10 @@
+{
+  "name": "hdmi-panel",
+  "version": "1.0.0",
+  "packageType": "app",
+  "appName": "HDMI Panel",
+  "appPath": "index.html",
+  "serviceFile": "service.js",
+  "keys": [],
+  "description": "Painel de diagnostico HDMI/CEC para Q80A (extcon + hdmicec D-Bus)"
+}

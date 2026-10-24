@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="utf-8">
+<title>HDMI Panel</title>
+<style>
+  body { background:#0b0e14; color:#e8eef6; font-family:Segoe UI,Roboto,sans-serif; margin:0; padding:32px; }
+  h1 { font-size:28px; font-weight:300; letter-spacing:2px; margin:0 0 24px; }
+  h2 { font-size:14px; text-transform:uppercase; letter-spacing:1px; color:#7f93ab; margin:28px 0 8px; }
+  .grid { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; max-width:900px; }
+  .port { background:#141a24; border:1px solid #26303f; border-radius:10px; padding:16px 18px; }
+  .port.on { border-color:#3ecf8e; }
+  .port .name { font-size:20px; font-weight:600; }
+  .port .st { font-size:12px; margin-top:6px; color:#7f93ab; }
+  .port.on .st { color:#3ecf8e; }
+  table { border-collapse:collapse; min-width:520px; }
+  td,th { text-align:left; padding:8px 14px; border-bottom:1px solid #26303f; font-size:14px; }
+  th { color:#7f93ab; font-weight:500; }
+  .badge { display:inline-block; padding:2px 10px; border-radius:99px; background:#1d2635; font-size:12px; }
+  .badge.on { background:#123727; color:#3ecf8e; }
+  #err { color:#e2a34d; font-size:13px; margin-top:20px; white-space:pre-line; }
+  .dim { color:#53627a; }
+</style>
+</head>
+<body>
+<h1>HDMI Panel <span class="dim">Q80A</span></h1>
+<div class="grid" id="ports"></div>
+<h2>CEC devices <span id="active"></span></h2>
+<table id="cec"><tr><th>Nome</th><th>Porta</th><th>Tipo</th></tr></table>
+<div id="err"></div>
+<script>
+const TYPES = {0:'TV',1:'Recorder',2:'?Recorder',3:'Tuner',4:'Playback',5:'Audio (AVR)',6:'?Tuner',7:'?Tuner',8:'Playback2',9:'?Rec2',10:'?Tuner2',11:'?Playback3',12:'?Reserved',13:'?Reserved',14:'Free use',15:'Unreg'};
+async function tick(){
+  try{
+    const d = await (await fetch('http://127.0.0.1:8091/api')).json();
+    const g = document.getElementById('ports'); g.innerHTML='';
+    d.ports.forEach(p=>{
+      const div=document.createElement('div');
+      div.className='port'+(p.connected?' on':'');
+      div.innerHTML=`<div class="name">${p.port}</div><div class="st">${p.connected?'conectado':'—'}</div>`;
+      g.appendChild(div);
+    });
+    document.getElementById('active').textContent = d.activeSource ? `· fonte ativa: ${d.activeSource}` : '';
+    const t=document.getElementById('cec'); t.innerHTML='<tr><th>Nome</th><th>Porta</th><th>Tipo</th></tr>';
+    (d.cec||[]).forEach(c=>{
+      const r=t.insertRow();
+      r.insertCell().textContent=c.name||'?';
+      r.insertCell().textContent=c.port!=null?('HDMI'+(+c.port+1)):'?';
+      r.insertCell().textContent=TYPES[+c.type]||('type '+c.type);
+    });
+    document.getElementById('err').textContent=(d.errors||[]).join('\n');
+  }catch(e){ document.getElementById('err').textContent='service 127.0.0.1:8091 fora do ar — lance o modulo pelo TizenBrew'; }
+}
+tick(); setInterval(tick,2000);
+</script>
+</body>
+</html>

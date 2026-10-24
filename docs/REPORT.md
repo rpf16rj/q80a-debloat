@@ -56,6 +56,12 @@ Amazon Alexa, Samsung Promotion, Xbox, Spotify, e-Manual, Security Center, Globo
 ### Menu de serviço
 - `app_launcher -s org.tizen.factory` abre direto — sem sequência de controle. Inspeção apenas (nada alterado)
 
+### Painel HDMI — módulo pronto (não testado na TV ainda)
+- `modules/hdmi-panel/` — app TizenBrew local: `service.js` serve `/api` em `127.0.0.1:8091` lendo `extcon/state` + chamando `busctl` para CEC; `index.html` renderiza painel auto-refresh (2s)
+- `patch-tizenbrew.sh` ganhou step `[3b]` — appPath local para módulos `local/*` do tipo `app` (necessário pro painel)
+- `tools/hdmi-timings` — binário ARMv7 estático (zig 0.17, musl) que faz `VIDIOC_QUERY_DV_TIMINGS` em `/dev/video21` → resolução/fps/pixclk reais do sinal HDMI. Fonte: `tools/hdmi-timings.c`
+- Pendente: copiar `modules/hdmi-panel` pra `localmodules/` na TV + registrar `local/hdmi-panel` no config + testar se o service (user `owner`) consegue ler extcon e chamar `busctl` (SMACK pode bloquear — degradar graceful)
+
 ### Limpeza executada
 - Listeners do PC parados (bridge, listener, http.server 8888, wled-relay 8090)
 - **Pendente (admin no Windows)**: `kit/cleanup-rdp.ps1` — remove share `x$(nc …)`, desativa `tvrdp`, `fDenyTSConnections=1`, firewall RDP off
