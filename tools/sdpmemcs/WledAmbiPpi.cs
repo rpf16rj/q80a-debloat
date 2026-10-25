@@ -19,6 +19,15 @@ internal static class WledAmbiPpi
         int w = 960, h = 540;
 
         var udp = new UdpClient();
+        try
+        {
+            var wr = System.Net.WebRequest.Create("http://" + wledIp + "/json/state");
+            wr.Method = "POST"; wr.ContentType = "application/json"; wr.Timeout = 3000;
+            var body = System.Text.Encoding.UTF8.GetBytes("{\"seg\":[{\"fx\":0,\"col\":[[0,0,0],[0,0,0],[0,0,0]]}]}");
+            using (var rs = wr.GetRequestStream()) rs.Write(body, 0, body.Length);
+            wr.GetResponse().Close();
+        }
+        catch (Exception e) { Console.WriteLine("black-state: " + e.Message); }
         IntPtr rd = Marshal.AllocHGlobal(512);
         IntPtr ybuf = Marshal.AllocHGlobal(w * h);
         IntPtr cbuf = Marshal.AllocHGlobal(w * h);
