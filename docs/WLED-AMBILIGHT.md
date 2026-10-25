@@ -122,3 +122,25 @@ Module `local/wled-ambi` spawns `dotnet WledAmbiPpi.exe` — spawn works, captur
 
 - 1-click Shared Folder -> stage2 `r` auto-launches WledAmbiPpi (works today)
 - Custom WGT: needs signing cert + a capture privilege normal apps lack — open question
+
+
+## The capture gate is SMACK label (final)
+
+- uid 5001 + `System::Privileged` (shell/mount context) -> real frames, any gid
+- uid 5001 + app label (TizenBrew StandaloneService) -> ppicapture returns
+  r=0 but **zeroed/black frames** — daemon checks the peer label (SO_PEERSEC),
+  not uid, not manifest privileges (added display/appmanager/drmplay to
+  TizenBrew config — still black)
+
+**All no-root launcher paths exhausted:**
+- SMACK64EXEC on a copied dotnet -> UEP blocks unsigned copies
+- SMACK64EXEC on /usr/bin/dotnet -> rootfs is ro
+- init.d/cron -> nothing executes from writable paths at boot
+- TizenBrew/WGT service -> app label, capture denied
+
+=> Starting the ambilight requires the mount/stage2 context (1 Shared-Folder
+   click per boot), or a kernel module patching the SMACK check
+   (insmod of unsigned .ko already proven — future project).
+
+WGT skeleton kept in apps/wled-ambi/ for reference — would hit the same
+label wall as TizenBrew even if signed.
