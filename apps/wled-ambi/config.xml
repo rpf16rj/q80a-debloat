@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<widget xmlns:tizen="http://tizen.org/ns/widgets" xmlns="http://www.w3.org/ns/widgets"
+        id="http://local.dev/wled-ambi" version="1.0.0" viewmodes="maximized">
+    <access origin="*" subdomains="true"/>
+    <tizen:application id="wledambi.WledAmbilight" package="wledambi" required_version="3.0"/>
+    <author href="http://local.dev">q80a-debloat</author>
+    <content src="index.html"/>
+    <tizen:service id="wledambi.service">
+        <tizen:content type="application/javascript" src="service/index.js"/>
+    </tizen:service>
+    <feature name="http://tizen.org/feature/screen.size.all"/>
+    <feature name="http://tizen.org/feature/web.service"/>
+    <icon src="icon.png"/>
+    <name>WLED Ambilight</name>
+    <!-- broad privilege set — trying to unlock the native display capture path -->
+    <tizen:privilege name="http://tizen.org/privilege/internet"/>
+    <tizen:privilege name="http://tizen.org/privilege/network.public"/>
+    <tizen:privilege name="http://tizen.org/privilege/tv.inputdevice"/>
+    <tizen:privilege name="http://tizen.org/privilege/recorder"/>
+    <tizen:privilege name="http://tizen.org/privilege/mediacapture"/>
+    <tizen:privilege name="http://tizen.org/privilege/display"/>
+    <tizen:privilege name="http://tizen.org/privilege/camera"/>
+    <tizen:privilege name="http://tizen.org/privilege/appmanager.launch"/>
+    <tizen:privilege name="http://tizen.org/privilege/application.launch"/>
+    <tizen:privilege name="http://developer.samsung.com/privilege/network.public"/>
+    <tizen:privilege name="http://developer.samsung.com/privilege/drmplay"/>
+    <tizen:metadata key="http://samsung.com/tv/metadata/prelaunch.support" value="true"/>
+</widget>
