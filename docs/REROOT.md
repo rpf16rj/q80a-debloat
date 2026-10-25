@@ -3,6 +3,11 @@
 The stage-2 is **already on the TV** at `/home/owner/share/r` (`/opt` partition, survives reboot).
 Re-rooting = repeating the injection only. Estimated time: ~3 min.
 
+> **Ambilight auto-start**: the stage-2 also launches `WledAmbi.exe` (WLED ambilight,
+> `docs/WLED-AMBILIGHT.md`) in the background — one Shared Folder click gives you
+> root shell + running ambilight. Kill it with `pkill -f WledAmbi` if unwanted.
+
+
 ## Prerequisites (one-time)
 
 - TV and PC on the same LAN (TV `192.168.3.191`, PC `192.168.3.200`)
