@@ -1,0 +1,11 @@
+{
+  "name": "WLED Ambilight",
+  "description": "Native screen-capture ambilight -> WLED via DDP (~50fps). No root needed.",
+  "version": "1.0.0",
+  "type": "app",
+  "serviceFile": "service.js",
+  "mainFile": "main.js",
+  "icon": "https://knowledgebase.avr-sh.de/wp-content/uploads/2023/10/WLED-Logo.png",
+  "permissions": ["network", "display"],
+  "platforms": ["orsay", "tizen"]
+}
