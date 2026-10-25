@@ -1,0 +1,1 @@
+{"type":6,"payload":{"fullName":"local/wled-ambi","serviceFile":"service.js"}}

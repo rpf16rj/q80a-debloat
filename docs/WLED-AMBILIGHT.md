@@ -144,3 +144,20 @@ Module `local/wled-ambi` spawns `dotnet WledAmbiPpi.exe` — spawn works, captur
 
 WGT skeleton kept in apps/wled-ambi/ for reference — would hit the same
 label wall as TizenBrew even if signed.
+
+
+## Zero-click status (2025-10-25)
+
+- Daemon needs uid 5001 + SMACK `User` (or better) — proven `User` captures.
+- No userland zero-click exec found: TizenBrew service is `User` but app-sandbox
+  blocks system-binary exec (EACCES); module vm lacks child_process;
+  sdbd `sync:` = write-only, `appinstall`/`vd_appinstall` no eval, `exec:`/`shell:` refused.
+- Remaining path: kernel module NOP-ing `e_security_privilege_check`
+  (@ 0x4ddd5 in /usr/bin/enlightenment) — deferred, deemed too risky for now.
+
+## PC auto-start stack
+
+- `kit/tv-stack.py` — one process: 9998 shell, 9997 control bridge, 9999 beacon, 8888 GET (serves tools/), 8899 PUT (uploads to tools/tvbin/)
+- `kit/tv-stack.bat` — run once manually
+- `kit/install-startup.bat` — RUN AS ADMIN once: registers tv-stack at logon + scheduled task re-arming the tvrdp password (payload) every boot
+- After install: every PC boot leaves the stack armed → TV side is just Remote PC -> Shared Folder

@@ -43,7 +43,7 @@ internal static class SdbInject
 
         // pending service opens to try, in order
         string[] services = {
-            "shell:0 appinstall tpk " + (args.Length > 0 ? string.Join(" ", args) : "x;id>/home/owner/share/tmp/sdk_tools/inj_id.txt#.tpk"),
+            args.Length > 0 && args[0].StartsWith("svc:") ? args[0].Substring(4) : "shell:0 appinstall tpk " + (args.Length > 0 ? string.Join(" ", args) : "x;id>/tmp/inj.tpk"),
         };
 
         while (Environment.TickCount < deadline)

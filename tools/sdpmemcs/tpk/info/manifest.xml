@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns="http://tizen.org/ns/packages" package="dev.test.wled" version="0.1.0" install-location="internal-only" api-version="5.0">
+  <label>wledtest</label>
+  <provider-name>dev</provider-name>
+  <app appid="dev.test.wled" exec="wled.bin" type="capp" multiple="false" taskmanage="false" enabled="true">
+    <label>wledtest</label>
+    <icon>icon.png</icon>
+  </app>
+</manifest>

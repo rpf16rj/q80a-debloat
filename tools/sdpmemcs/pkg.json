@@ -1,0 +1,10 @@
+{
+  "name": "WLED Ambilight",
+  "appName": "WLED Ambilight",
+  "description": "Native screen-capture ambilight -> WLED via DDP",
+  "version": "1.0.0",
+  "packageType": "app",
+  "appPath": "index.html",
+  "serviceFile": "service.js",
+  "keys": []
+}
