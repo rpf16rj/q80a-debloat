@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<widget xmlns:tizen="http://tizen.org/ns/widgets" xmlns="http://www.w3.org/ns/widgets" id="http://wled.local/ambi" version="1.0.0" viewmodes="maximized">
+    <tizen:application id="wledAmbi.service" package="wledAmbi" required_version="3.0"/>
+    <name>WledAmbi</name>
+    <content src="index.html"/>
+    <feature name="http://tizen.org/feature/screen.size.all"/>
+    <feature name="http://tizen.org/feature/web.service"/>
+    <tizen:privilege name="http://tizen.org/privilege/internet"/>
+    <tizen:privilege name="http://tizen.org/privilege/tv.inputdevice"/>
+    <tizen:privilege name="http://tizen.org/privilege/application.launch"/>
+    <tizen:profile name="tv-samsung"/>
+    <tizen:service id="wledAmbi.svc">
+        <tizen:content src="service.js"/>
+        <tizen:name>WledAmbiSvc</tizen:name>
+        <tizen:description>WLED ambilight service</tizen:description>
+    </tizen:service>
+    <tizen:setting screen-orientation="landscape" context-menu="disable" background-support="enable" encryption="disable" install-location="auto" hwkey-event="disable"/>
+</widget>
