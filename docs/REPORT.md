@@ -66,3 +66,56 @@ Amazon Alexa, Samsung Promotion, Xbox, Spotify, e-Manual, Security Center, Globo
 - **Done (admin on Windows)**: `kit/cleanup-rdp.ps1` — removes share `x$(nc …)`, disables `tvrdp`, `fDenyTSConnections=1`, RDP firewall off
 - **Done (user)**: restored the `rpf16` password
 - Persists on the TV (benign/needed): `/home/owner/share/r`, `localmodules/`, TizenBrew patch, config `local/wled-ambilight`
+
+
+# Session report — 2026-10-26 (sdbd injection + signed WGT service)
+
+## New: sdbd loopback injection (exec as `sdk`, no mount needed)
+
+`sdbd` on `127.0.0.1:26101` (devIP `127.0.0.1`) accepts the Vetro-style tpk injection:
+
+```
+shell:0 appinstall tpk new2.tpk`printf${IFS}%s${IFS}<base64>|base64${IFS}-d|bash`.tpk
+```
+
+- Runs as `uid=901(sdk)`, SMACK `System` — not root, but `setsid /usr/bin/dotnet <daemon>`
+  produces a `User`-labeled daemon that captures real frames (~60-90fps, NV16 720x540).
+- The SVE-2025-50109 patch verdict was wrong: `appinstall` does eval the path —
+  only the `${IFS}`+backtick form works; `exec:`/`shell:`/`vd_appinstall`/`sync:` don't eval.
+- Gate trick: `mkdir -p /tmp/s-<rand>` first — a stale dir silently kills `&&` chains.
+- External hosts can't inject (sdbd resets non-loopback CNXN).
+- Helper: `tools/sdpmemcs/SdbInject.exe v2:<cmd>` builds CNXN/OPEN + injection itself.
+
+## New: signed WGT service `wledAmbi00`
+
+`wgt/` → `WledAmbi.wgt` (official `tizen package` + `pubsig` profile):
+- `<tizen:service>` `services/wledambi-service/dist/index.js` — on `onStart` connects
+  to `127.0.0.1:26101` and fires the injection (10 retries @ 5s); real Node-ish JS
+  (`require('net')`, `Buffer`, `setInterval` work — TizenBrew's runtime can't).
+- Registers `wledAmbi00.WledAmbiUi` + `wledAmbi00.WledAmbiSvc`; `launch_app` works on both.
+- UI `index.html` also fires the service via `launchAppControl`.
+- Persists across reboot (installed package); `/tmp` clears — tools need re-push.
+- Verified: service → injection → `sdk` daemon → `User` → strip lit end-to-end.
+
+## Signing lessons
+
+- `pkgcmd` `-19` = pkgid must be 10 chars (`wledAmbi00`), or bad package format
+  (jszip signatures rejected — use the official `tizen.bat package`).
+- `-12 "Invalid format of certificate in signature"` = the user Samsung dev certs
+  have empty DN RDNs (`C=,ST=,L=,O=,OU=`) — the TV's cert parser rejects them.
+- Working chain: `tizen-distributor-signer.p12` (Tizen public test CA — same as
+  TizenBrew's) with pw `tizenpkcs12passfordsigner`; author from
+  dzikus/tizen-camera-pip `author.p12` (pw `camera-pip`).
+- User Samsung certs kept at `Desktop\cert samsung tyzen\` + `SamsungCertificate\q80a\`
+  (Public level, DUID-bound) — useless for install but harmless to keep.
+
+## Still open
+
+- **Boot persistence**: public cert doesn't auto-start services (Vetro docs cite Partner).
+- **Launcher visibility**: `wledAmbi00.WledAmbiUi` installs + runs via `launch_app`
+  but never appears in the TV app menu (icon/label set, `Nodisplay:0` — Smart Hub
+  reindex or a missing metadata key unresolved).
+- **Root without arm**: not found — sdbd injection is `sdk`, not `uid0`.
+- `TizenBrew` module loading was repaired after injected bootstrap fragments
+  broke `dist/index.js` (truncated back to the webpack bootstrap line).
+- `/home/owner/share/*` persists; `/tmp/*` does not.
