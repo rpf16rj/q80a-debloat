@@ -161,3 +161,69 @@ label wall as TizenBrew even if signed.
 - `kit/tv-stack.bat` — run once manually
 - `kit/install-startup.bat` — RUN AS ADMIN once: registers tv-stack at logon + scheduled task re-arming the tvrdp password (payload) every boot
 - After install: every PC boot leaves the stack armed → TV side is just Remote PC -> Shared Folder
+
+
+## sdbd loopback injection — exec WITHOUT the mount (2025-10-26)
+
+`sdbd` on `127.0.0.1:26101` accepts a Vetro-style package-name injection:
+
+```
+shell:0 appinstall tpk new2.tpk`printf${IFS}%s${IFS}<base64>|base64${IFS}-d|bash`.tpk
+```
+
+- Runs as `uid=901(sdk)`, SMACK `System`. Not root — but `setsid /usr/bin/dotnet ...`
+  execs the daemon with SMACK label `User` → captures frames (~60-90fps).
+- The earlier "patched" verdict for SVE-2025-50109 was wrong: `appinstall` DOES eval
+  the tpk path — only `${IFS}`+backtick form works, and commands must use
+  `mkdir -p /tmp/s-<rand>` as a gate (a stale dir from a previous run silently skips `&&` chains).
+- Helper: `tools/sdpmemcs/SdbInject.exe v2:<shell-cmd>` builds the CNXN/OPEN wire
+  and the injection string itself (immune to bridge `$`/backtick mangling).
+- External PCs cannot inject: sdbd resets non-loopback hosts after CNXN.
+
+
+## Signed WGT service (wledAmbi00) — the working trigger
+
+`wgt/` builds `WledAmbi.wgt` — a `<tizen:service>` that on `onStart` opens a TCP
+connection to sdbd and fires the injection above (retries 10x @ 5s).
+
+- Service entry: `services/wledambi-service/dist/index.js`
+  (runtime = Tizen WGT service JS — real `module.exports.onStart`, `require('net')`,
+  `Buffer`, `setInterval` all work; **TizenBrew's** runtime is different and crashed
+  on `net`/`Buffer`/`setTimeout` — module sandbox has no builtins at all).
+- Install via `pkgcmd -i -t wgt -p /tmp/WledAmbi.wgt` → registers `wledAmbi00.WledAmbiUi`
+  (UI) + `wledAmbi00.WledAmbiSvc` (service). `launch_app <appid>` starts either.
+- UI `index.html` calls `tizen.application.launchAppControl` on the service, so
+  opening the UI also fires the injection.
+- Verified end-to-end: service → injection → `sdk` daemon → `User` → strip lit.
+- **App does NOT show in the launcher** (pkginfo lists it, `Nodisplay:0`,
+  icon+label set, still invisible — unresolved, possibly needs Smart Hub reindex).
+- **Service does NOT auto-start at boot** — public cert doesn't get on-boot
+  privileges (Vetro docs say Partner-level was used for their on-boot service).
+
+## Signing findings (why `-19` and `-12` happened)
+
+| Error | Cause | Fix |
+|---|---|---|
+| `Parsing error [-19]` | pkgid `wledAmbi` (8 chars) | use a 10-char pkgid (`wledAmbi00`) |
+| `Check certificate error [-12] Invalid format of certificate in signature` | Samsung dev cert whose DN has empty RDNs (`CN=Rodrigo,OU=,O=,L=,ST=,C=`) — TV's parser rejects empty DN attributes | sign with the **public Tizen SDK chain** |
+| `-19` even with valid wgt | jszip+reisxd/tizen.js signatures rejected by pkgmgr | package with the official `C:\tizen-studio\tools\ide\bin\tizen.bat package` |
+
+Working signing recipe:
+
+- profile: `tizen security-profiles add -n pubsig -a <author.p12> -p <pw> -d C:\tizen-studio\tools\certificate-generator\certificates\distributor\tizen-distributor-signer.p12 -dp tizenpkcs12passfordsigner`
+- author cert: any well-formed dev cert (we used the public `author.p12` from
+  github dzikus/tizen-camera-pip — pw `camera-pip` — since the user's Samsung
+  author cert also has empty DN fields)
+- the Tizen Public Distributor chain is what TizenBrew itself uses — the TV trusts it for dev installs; the user's Samsung VD DEVELOPER Public CA chain is rejected (-12)
+
+
+## Zero-click status (updated 2025-10-26)
+
+- **Root:** still needs the mount/stage2 click (sdbd exec is `sdk`, not `uid0`).
+- **Ambilight without mount:** proven — `launch_app wledAmbi00.WledAmbiSvc` →
+  injection → daemon → fita, but still needs SOMETHING to fire that launch_app
+  (root shell, TizenBrew UI, or the app icon if it ever indexes).
+- Not boot-persistent: `/tmp` wipes at reboot (push tools again), service needs
+  Partner-level cert for auto-start, and no `launch_app`-on-boot hook was found.
+- Practical flow today: arm Shared Folder once per boot → stage2 auto-launches
+  daemon (unchanged); OR `launch_app wledAmbi00.WledAmbiSvc` from any root shell.

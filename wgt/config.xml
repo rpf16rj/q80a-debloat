@@ -1,18 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <widget xmlns:tizen="http://tizen.org/ns/widgets" xmlns="http://www.w3.org/ns/widgets" id="http://wled.local/ambi" version="1.0.0" viewmodes="maximized">
-    <tizen:application id="wledAmbi.service" package="wledAmbi" required_version="3.0"/>
-    <name>WledAmbi</name>
+    <access origin="*" subdomains="true"/>
+    <tizen:app-control>
+        <tizen:src name="index.html" reload="disable"/>
+        <tizen:operation name="http://samsung.com/appcontrol/operation/eden_resume"/>
+    </tizen:app-control>
+    <tizen:application id="wledAmbi00.WledAmbiUi" package="wledAmbi00" required_version="3.0"/>
+    <author>WledAmbi</author>
     <content src="index.html"/>
     <feature name="http://tizen.org/feature/screen.size.all"/>
     <feature name="http://tizen.org/feature/web.service"/>
+    <icon src="icon.png"/><name>WledAmbi</name>
     <tizen:privilege name="http://tizen.org/privilege/internet"/>
-    <tizen:privilege name="http://tizen.org/privilege/tv.inputdevice"/>
     <tizen:privilege name="http://tizen.org/privilege/application.launch"/>
+    <tizen:privilege name="http://tizen.org/privilege/display"/>
+    <tizen:privilege name="http://tizen.org/privilege/appmanager.launch"/>
     <tizen:profile name="tv-samsung"/>
-    <tizen:service id="wledAmbi.svc">
-        <tizen:content src="service.js"/>
+    <tizen:service id="wledAmbi00.WledAmbiSvc">
+        <tizen:content src="services/wledambi-service/dist/index.js"/>
         <tizen:name>WledAmbiSvc</tizen:name>
         <tizen:description>WLED ambilight service</tizen:description>
     </tizen:service>
-    <tizen:setting screen-orientation="landscape" context-menu="disable" background-support="enable" encryption="disable" install-location="auto" hwkey-event="disable"/>
+    <tizen:setting screen-orientation="landscape" context-menu="enable" background-support="enable" encryption="disable" install-location="auto" hwkey-event="enable"/>
 </widget>
