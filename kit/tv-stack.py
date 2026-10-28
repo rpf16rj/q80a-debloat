@@ -25,6 +25,11 @@ def tv_server():
         def writer(c=conn):
             while True:
                 data = tv_send.get()
+                if state['tv'] is not c:
+                    # socket remplacé (TV reconnectée): remettre la commande en file
+                    # pour que le writer de la connexion courante la récupère.
+                    tv_send.put(data)
+                    return
                 try: c.sendall(data)
                 except Exception: return
         threading.Thread(target=writer, daemon=True).start()
